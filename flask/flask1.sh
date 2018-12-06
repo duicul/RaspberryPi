@@ -1,7 +1,9 @@
-str = Hello.py
-if $# -ge 1
-str = $1
-echo $str
+#!/bin/bash
+echo $#
+str=Hello.py
+if test $# -ge 1
+then str=$1
+fi
+echo  $str
 set FLASK_APP=$str
-
 python $str
