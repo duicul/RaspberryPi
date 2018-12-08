@@ -2,6 +2,7 @@ from flask import Flask,session, redirect, url_for, request,render_template
 from gpiozero import LED
 from time import sleep
 import Adafruit_DHT
+import myloginstatus
 
 app = Flask(__name__)
 app.secret_key = '571ba9$#/~90'
@@ -10,7 +11,9 @@ app.secret_key = '571ba9$#/~90'
 def success(name):
    return 'welcome %s' % name
 
-
+@app.route('/loginstatus.py')
+def loginstatus():
+	return myloginstatus.show()
 
 @app.route('/login',methods = ['POST', 'GET'])
 def login():
@@ -25,8 +28,8 @@ def login():
 def index():
 	if 'username' in session:
 		username = session['username']
-		return "<font color=red size=20> Hello "+username+"</font>"+"<br><a href=\"/logout\"><button>Logout</button>"
-	else:  return render_template('login.html')
+	else:   username="anonymous"
+	return render_template('login.html',name=username)
 
 @app.route('/on')
 def turnon():
@@ -47,4 +50,6 @@ if __name__ == '__main__':
 
 def read_temp(pin):
 	sensor = Adafruit_DHT.DHT11
-	print(humidity, temperature = Adafruit_DHT.read_retry(sensor, pin))
+	humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
+        print(str(humidity)+"  "+str(temperature))
+

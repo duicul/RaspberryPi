@@ -1,21 +1,27 @@
 <html>
-<head><script src="/static/js/hello.js"></script>
+<head><script src="/static/js/hello.js?v=1.1"></script>
 <script src="/static/js/bootstrap.js"></script>
 <script src="/static/js/bootstrap.js"></script>
 <link rel="stylesheet" href="/static/css/bootstrap.css">
 <script src="/static/js/jquery-3.3.1.js"></script>
 
 </head>
-   <body>
-      
-      <form action = "login" method = "post">
+<body>
+   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      {% if name=="anonymous" %}
+	<div class="navbar-brand">Try to login</div>
+      {%else%}
+	<font color="blue" class="mr-auto link">{{name}}</font>
+        <a class="btn btn-primary" href="/logout">Logout</a>
+	{%endif%}
+   </nav>
+      {% if name=="anonymous" %}
+	 <form action = "login" method = "post">
          <p>Enter Name:</p>
          <p><input type = "text" name = "nm" /></p>
          <p><input type = "submit" value = "submit" /></p>
-</form>
-        <p id="messfunc">Initial</p>
-	<button onClick="hello()">Hello</button>
-	<button onClick="goodbye()">Goodgye</button>	     
-    <button onClick="loginstatus()">Loginstatus</button>  
-   </body>
+	</form>	
+        {% endif %}   
+
+</body>
 </html>

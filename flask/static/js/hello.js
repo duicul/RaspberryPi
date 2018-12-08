@@ -11,7 +11,7 @@ function goodbye(){
  } 
  
  function loginstatus(){
- $.ajax({url: "/static/py/loginstatus.py", success: function(result){
+ $.ajax({url: "/loginstatus.py", success: function(result){
        alert(result);
     }});
 	/*$.ajax({url: "demo_test.txt", success: function(result){
