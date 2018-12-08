@@ -9,3 +9,12 @@ function goodbye(){
  $("#messfunc").html("goodbye");
  //document.getElementById("messfunc").innerHTML = "goodbye";
  } 
+ 
+ function loginstatus(){
+ $.ajax({url: "/static/py/loginstatus.py", success: function(result){
+       alert(result);
+    }});
+	/*$.ajax({url: "demo_test.txt", success: function(result){
+        $("#div1").html(result);
+    }});*/
+ } 
