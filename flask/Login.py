@@ -1,7 +1,7 @@
 from flask import Flask,session, redirect, url_for, request,render_template
-from gpiozero import LED
+#from gpiozero import LED
 from time import sleep
-import Adafruit_DHT
+#import Adafruit_DHT
 import myloginstatus
 
 app = Flask(__name__)
@@ -35,6 +35,10 @@ def index():
 def turnon():
 	LED(47).on()
 
+@app.route('/board_status')
+def board_status():
+	return 'temperature humidity pin settings'	
+
 @app.route('/off')
 def turnoff():
 	LED(47).off()
@@ -48,8 +52,8 @@ if __name__ == '__main__':
    app.run(debug = True,host='0.0.0.0')
 
 
-def read_temp(pin):
-	sensor = Adafruit_DHT.DHT11
-	humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
-        print(str(humidity)+"  "+str(temperature))
+#def read_temp(pin):
+#	sensor = Adafruit_DHT.DHT11
+#	humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
+#	print(str(humidity)+"  "+str(temperature))
 

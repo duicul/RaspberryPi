@@ -9,6 +9,18 @@ function goodbye(){
  $("#messfunc").html("goodbye");
  //document.getElementById("messfunc").innerHTML = "goodbye";
  } 
+ var ind=0;
+ function init_server(period)
+ {setInterval(board_status,period);}
+ 
+ function board_status()
+ {$.ajax({url: "/board_status", success: function(result){
+       $("#board_status").html(result+" "+ind);
+	   ind++;
+    }});
+	 
+	 
+ }
  
  function loginstatus(){
  $.ajax({url: "/loginstatus.py", success: function(result){

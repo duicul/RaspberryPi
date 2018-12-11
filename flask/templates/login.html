@@ -6,7 +6,7 @@
 <script src="/static/js/jquery-3.3.1.js"></script>
 
 </head>
-<body>
+<body onload="init_server(3000)">
    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       {% if name=="anonymous" %}
 	<div class="navbar-brand">Try to login</div>
@@ -21,6 +21,8 @@
          <p><input type = "text" name = "nm" /></p>
          <p><input type = "submit" value = "submit" /></p>
 	</form>	
+	{%else%}
+	<p id="board_status"></p>
         {% endif %}   
 
 </body>
