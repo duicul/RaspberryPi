@@ -1,4 +1,5 @@
 #!/bin/bash
+sudo su
 echo $#
 str=Hello.py
 if test $# -ge 1
