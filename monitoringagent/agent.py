@@ -1,16 +1,18 @@
 import requests
 import json
-data="outputpins"
-for i in range(20):
-    r = requests.post('http://localhost:8765/outputpins',str(i))
+import time
+loop=0
+while(loop<100):
+    print("Loop "+str(loop))
+    data="outputpins"
+    r = requests.post('http://localhost:8765/outputpins',str(21))
     print(r.text)
-    status_json = r.json
     y=json.loads(r.text)
     print(y)
-    for i in range(30):
+    for i in range(21):
         try:
-            print(str(i)+" "+y[str(i)])
+            print(str(i)+"  "+y[str(i)])
         except KeyError:
-            pass
-#for i in status_json:
-#    print(i)
+            print("Not received "+str(i))
+    loop=loop+1
+    time.sleep(1.2)
