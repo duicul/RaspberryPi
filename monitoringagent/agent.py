@@ -5,7 +5,7 @@ loop=0
 while(loop<100):
     print("Loop "+str(loop))
     data="outputpins"
-    r = requests.post('http://localhost:8765/outputpins',data)
+    r = requests.post('http://192.168.1.38:8765/outputpins',data)
     print(r.text)
     y=json.loads(r.text)
     print(y)

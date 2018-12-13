@@ -3,9 +3,14 @@ from flask import Flask,session, redirect, url_for, request,render_template
 from time import sleep
 #import Adafruit_DHT
 import myloginstatus
+import data_retr
 
 app = Flask(__name__)
 app.secret_key = '571ba9$#/~90'
+
+@app.route('/data_retr')
+def data_status():
+	return data_retr.showdata()
 
 @app.route('/success/<name>')
 def success(name):
