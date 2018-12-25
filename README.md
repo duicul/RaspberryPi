@@ -1,5 +1,48 @@
 # RaspberryPi
 <h1> Communication protocol client -> server</h1><br>
-Client------------------------->Server--------------------------------------------->Client------------------------------------>Server
- 1s   req=post(outputpinstatus)        response=json(outputpins changed) 
- 60s  req=post(pinstatus)              response=json(ouptutpinschanged+inputpinsdata)       request=post(json(inputpinsvalues))   
+<table>
+<th>
+<td>
+Client
+</td>
+<td>------------------------->
+</td>
+<td>Server
+</td>
+<td>--------------------------------------------->
+</td>
+<td>Client
+</td>
+<td>------------------------------------>
+</td>
+<td>Server
+</td>
+</th>
+<tr>
+<td>1</td>
+<td> 1s 
+</td>
+<td>  req=post(outputpinstatus)
+</td>
+<td></td>
+<td>response=json(outputpins changed) 
+</td>
+<td></td>
+<td></td>
+<td></td>
+</tr> 
+<tr>
+<td>2</td>
+<td>60s
+</td>
+<td>  req=post(pinstatus)
+</td>
+<td></td>
+<td>response=json(ouptutpinschanged+inputpinsdata)
+</td>
+<td></td>
+<td>request=post(json(inputpinsvalues))
+</td>
+<td></td>
+</tr>
+ </table>
