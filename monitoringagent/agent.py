@@ -36,13 +36,22 @@ try:
             print(y)
             print(in_pins)
             print(out_pins)
+            inpins_list=[]
             for i in range(21):
                 try:
                     print(str(i)+"  "+str(in_pins[str(i)]))
+                    inpins_list.append([str(i),str(in_pins[str(i)])])        
                 except KeyError:
                     try:
                         print(str(i)+"  "+str(out_pins[str(i)]))
                     except KeyError:
                         print("Not received "+str(i))
+            pins_dict={}
+            for i in inpins_list:
+                pins_dict[i[0]]=23.3
+            data=json.dumps(pins_dict)
+            addr='http://'+str(ip)+":"+str(port)+"/inputpinsstatus"
+            print(addr)
+            r = requests.post(addr,data)
 except ConnectionError:
     print("Main server is down")
