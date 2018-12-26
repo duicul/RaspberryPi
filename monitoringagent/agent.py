@@ -2,6 +2,7 @@ import requests
 import json
 import time
 import sys
+import random
 loop=0
 ip = sys.argv[1] if len(sys.argv)>1 else 'localhost'
 port = sys.argv[2] if len(sys.argv)>2 else 8765
@@ -48,7 +49,7 @@ try:
                         print("Not received "+str(i))
             pins_dict={}
             for i in inpins_list:
-                pins_dict[i[0]]=23.3
+                pins_dict[i[0]]=random.random()*40
             data=json.dumps(pins_dict)
             addr='http://'+str(ip)+":"+str(port)+"/inputpinsstatus"
             print(addr)
