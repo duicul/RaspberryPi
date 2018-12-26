@@ -19,8 +19,8 @@ Client
 </td>
 </th>
 <tr>
-<td>1</td>
-<td> 1s 
+<td>1s</td>
+<td>  
 </td>
 <td>  req=post(outputpinstatus)
 </td>
@@ -32,8 +32,8 @@ Client
 <td></td>
 </tr> 
 <tr>
-<td>2</td>
-<td>60s
+<td>60s</td>
+<td>
 </td>
 <td>  req=post(pinstatus)
 </td>
