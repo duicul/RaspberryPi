@@ -23,7 +23,8 @@ try:
                 try:
                     print(str(i)+"  "+str(y[str(i)]))
                 except KeyError:
-                    print("Not received "+str(i))
+		    pass
+                    #print("Not received "+str(i))
         else :
             loop=0
             data="pins"
@@ -46,7 +47,8 @@ try:
                     try:
                         print(str(i)+"  "+str(out_pins[str(i)]))
                     except KeyError:
-                        print("Not received "+str(i))
+                        pass
+			#print("Not received "+str(i))
             pins_dict={}
             for i in inpins_list:
                 pins_dict[i[0]]=random.random()*40

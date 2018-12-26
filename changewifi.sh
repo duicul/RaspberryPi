@@ -2,6 +2,7 @@
 echo  `cat /etc/wpa_supplicant/wpa_supplicant.conf `
 if test $# -ge 2
 then
+sudo chmod a+r  /etc/wpa_supplicant/wpa_supplicant.conf
 echo $1 $2
 echo `cat /etc/wpa_supplicant/wpa_supplicant.conf `
 sudo chmod a+w /etc/wpa_supplicant/wpa_supplicant.conf 
