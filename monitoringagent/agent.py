@@ -4,6 +4,8 @@ import time
 import sys
 import random
 loop=0
+user="duicul"
+password="daniel"
 ip = sys.argv[1] if len(sys.argv)>1 else 'localhost'
 port = sys.argv[2] if len(sys.argv)>2 else 8765
 try:
@@ -12,10 +14,13 @@ try:
         loop=loop+1
         time.sleep(1.2)
         if loop<30:
-            data="outputpins"
+            pins_dict={}
+            pins_dict['data']="outputpins"
+            pins_dict['user']=user
+            pins_dict['password']=password
             addr='http://'+str(ip)+":"+str(port)+"/outputpinsstatus"
             print(addr)
-            r = requests.post(addr,data)
+            r = requests.post(addr,json.dumps(pins_dict))
             print(r.text)
             y=json.loads(r.text)
             print(y)
@@ -26,10 +31,13 @@ try:
                     print("Not received "+str(i))
         else :
             loop=0
-            data="pins"
+            pins_dict={}
+            pins_dict['data']="pins"
+            pins_dict['user']=user
+            pins_dict['password']=password
             addr='http://'+str(ip)+":"+str(port)+"/pinsstatus"
             print(addr)
-            r = requests.post(addr,data)
+            r = requests.post(addr,json.dumps(pins_dict))
             print(r.text)
             y=json.loads(r.text)
             in_pins=json.loads(y['IN'])
@@ -48,11 +56,15 @@ try:
                     except KeyError:
                         print("Not received "+str(i))
             pins_dict={}
+            pins_dict['data']="inputpins"
+            pins_dict['user']=user
+            pins_dict['password']=password
             for i in inpins_list:
                 pins_dict[i[0]]=random.random()*40
             data=json.dumps(pins_dict)
             addr='http://'+str(ip)+":"+str(port)+"/inputpinsstatus"
             print(addr)
             r = requests.post(addr,data)
-except ConnectionError:
+except Exception as e:
     print("Main server is down")
+    print(e)
