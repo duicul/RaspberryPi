@@ -28,7 +28,8 @@ try:
                 try:
                     print(str(i)+"  "+str(y[str(i)]))
                 except KeyError:
-                    print("Not received "+str(i))
+		    pass
+                    #print("Not received "+str(i))
         else :
             loop=0
             pins_dict={}
@@ -54,7 +55,8 @@ try:
                     try:
                         print(str(i)+"  "+str(out_pins[str(i)]))
                     except KeyError:
-                        print("Not received "+str(i))
+                        pass
+			#print("Not received "+str(i))
             pins_dict={}
             pins_dict['data']="inputpins"
             pins_dict['user']=user
