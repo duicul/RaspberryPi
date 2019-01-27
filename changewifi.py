@@ -68,11 +68,11 @@ class Insertdata_Wifi:
         file.close()
         
 if __name__ == '__main__':
-    ed=Extractdata_Wifi("wpa_supplicant.conf")
-    insd=Insertdata_Wifi("wpa_supplicant.conf")
+    ed=Extractdata_Wifi("/etc/wpa_supplicant/wpa_supplicant.conf")
+    insd=Insertdata_Wifi("/etc/wpa_supplicant/wpa_supplicant.conf")
     print(ed.getFile())
-    insd.setSSID("adas")
-    insd.setPsk("pass")
+    insd.setSSID("Tenda_962970")
+    insd.setPsk("pufulete")
     print(ed.getSSID())
     print(ed.getPsk())
     #insd.writeconf_file()
