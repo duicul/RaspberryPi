@@ -16,11 +16,9 @@
 	{%endif%}
    </nav>
       {% if name=="anonymous" %}
-	 <form action = "login" method = "post">
-         <p>Enter Name:</p>
-         <p><input type = "text" name = "nm" /></p>
-         <p><input type = "submit" value = "submit" /></p>
-	</form>	
+         <p>UserName: <input type = "text" id = "user_txt" /></p>
+         <p>Password: <input type = "text" id = "pass_txt" /></p>
+		<button onclik="login()">
 	{%else%}
 	<p id="board_status"></p>
 	<p id="data_status"></p>        

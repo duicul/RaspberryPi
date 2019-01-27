@@ -34,7 +34,7 @@ def index():
 	if 'username' in session:
 		username = session['username']
 	else:   username="anonymous"
-	return render_template('login.html',name=username)
+	return render_template('index.html',name=username)
 
 @app.route('/on')
 def turnon():
