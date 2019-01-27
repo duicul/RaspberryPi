@@ -17,9 +17,23 @@ function goodbye(){
   }
 
 function login()
-{$.post("/login",{user:$("#user_txt").val(),pass:$("#pass_txt").val()}, success: function(result){
-       window.location.replace("/");}});}
-
+{console.log("logging in ...");
+var url="/login";
+	var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                if(xmlhttp.responseText == "okay")
+		{console.log("logged in");
+                window.location.replace("/");}
+		else alert("Wrong username/password");
+		}
+        };
+    var formData = new FormData();
+    formData.append("user_txt",$("#user_txt").val());
+    formData.append("pass_txt",$("#pass_txt").val());
+    xmlhttp.open("POST",url, true);
+	xmlhttp.send(formData);	
+}
 
 function ajax_calls(){
 board_status();
@@ -30,12 +44,30 @@ function stopajaxcalls()
 {clearInterval(interval_calls);}
 
 function getconfigdata()
- {$.ajax({url: "/getconfigdata", success: function(result){
-       $("#config").html(result);}});}
-	   
+ {console.log("getconfigdata");
+$.ajax({url: "/getconfigdata", success: function(result){
+       $("#config").html(result);}
+	});
+}
+ 
 function setconfigdata()
- {$.post("/setconfigdata",{user:$("#username").val(),pass:$("#password").val(),ip:$("#ip").val(),port:$("#port").val()}, success: function(result){
-       alert("Config changed");}});}
+ {
+var url="/setconfigdata";
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                if(xmlhttp.responseText == "okay")
+                {getconfigdata();
+		alert("Configuration changed");}}
+        };
+    var formData = new FormData();
+    formData.append("user",$("#username").val());
+    formData.append("pass",$("#password").val());
+    formData.append("ip",$("#ip").val());
+    formData.append("port",$("#port").val());
+    xmlhttp.open("POST",url, true);
+        xmlhttp.send(formData);
+}
 
  function board_status()
  {$.ajax({url: "/board_status", success: function(result){

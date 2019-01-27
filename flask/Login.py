@@ -26,9 +26,13 @@ def loginstatus():
 def login():
    if request.method == 'POST':
            ed=extractvalues.Extractdata_Config("../config.txt")
-           if ed.getUsername() == request.form['username'] and ed.getPassword() == request.form['password']
+           print(request.form['user_txt'])
+	   print(request.form['pass_txt'])
+	   if ed.getUsername() == request.form['user_txt'] and ed.getPassword() == request.form['pass_txt']:
                 session['username'] = ed.getUsername() 
-
+		print(session['username'])
+		return "okay"	
+   return "error" #redirect('/')
 @app.route('/')
 def index():
 	if 'username' in session:
@@ -44,14 +48,18 @@ def turnon():
 def getdata():
 	return configvalue.getconfigdata("../config.txt")
 
-@app.route('/setconfigdata')
+@app.route('/setconfigdata',methods = ['POST'])
 def setdata():
         if request.method == 'POST':
-                user = request.form['user']
+                print("set config data method = post ")
+		user = request.form['user']
                 password = request.form['pass']
                 ip = request.form['ip']
                 port = request.form['port']
-                configvalue.setconfigdata(user,password,ip,port)
+                print(str(user)+" "+str(password)+" "+str(ip)+" "+str(port))
+		configvalue.setconfigdata(user,password,ip,port)
+		print("config data set")
+		return "okay"
 
 @app.route('/board_status')
 def board_status():
