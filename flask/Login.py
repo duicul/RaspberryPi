@@ -1,4 +1,5 @@
 from flask import Flask,session, redirect, url_for, request,render_template
+import extractvalue
 #from gpiozero import LED
 from time import sleep
 #import Adafruit_DHT
@@ -10,7 +11,7 @@ app.secret_key = '571ba9$#/~90'
 
 @app.route('/data_retr')
 def data_status():
-	return data_retr.showdata()
+	return "okay stubbed" #data_retr.showdata()
 
 @app.route('/success/<name>')
 def success(name):
@@ -34,7 +35,7 @@ def index():
 	if 'username' in session:
 		username = session['username']
 	else:   username="anonymous"
-	return render_template('login.html',name=username)
+	return render_template('login.html',name=username,ev=extractvalue)
 
 @app.route('/on')
 def turnon():

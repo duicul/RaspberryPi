@@ -1,3 +1,4 @@
+var interval_calls;
 function hello(){
 alert("hello");
 $("#messfunc").html("hello");
@@ -12,12 +13,17 @@ function goodbye(){
  var ind=0;
 
  function init_server(period)
- {setInterval(ajax_calls,period);}
+ {//interval_calls=setInterval(ajax_calls,period);
+  }
 
 function ajax_calls(){
 board_status();
 update_data();
 }
+
+function stopajaxcalls()
+{clearInterval(interval_calls);}
+
  function board_status()
  {$.ajax({url: "/board_status", success: function(result){
        $("#board_status").html(result+" "+ind);
