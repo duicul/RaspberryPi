@@ -13,14 +13,14 @@
       {%else%}
 	<font color="blue" class="mr-auto link">{{name}}</font>
         <a class="btn btn-primary" onClick="stopajaxcalls()"  href="/logout">Logout</a>
-		<p id="config" onload="getconfigdata()"></p>
 	{%endif%}
    </nav>
       {% if name=="anonymous" %}
          <p>UserName: <input type = "text" id = "user_txt" /></p>
          <p>Password: <input type = "text" id = "pass_txt" /></p>
-		<button onclik="login()">
+		<button onclik="login()">Login</button>
 	{%else%}
+	 <p id="config" onload="getconfigdata()"></p>
 	<p id="board_status"></p>
 	<p id="data_status"></p>        
 {% endif %}   

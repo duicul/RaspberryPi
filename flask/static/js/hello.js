@@ -16,6 +16,10 @@ function goodbye(){
  {//interval_calls=setInterval(ajax_calls,period);
   }
 
+function login()
+{}
+
+
 function ajax_calls(){
 board_status();
 update_data();
