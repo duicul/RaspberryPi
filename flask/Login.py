@@ -1,5 +1,6 @@
 from flask import Flask,session, redirect, url_for, request,render_template
 import configvalue
+import extractvalues
 #from gpiozero import LED
 from time import sleep
 #import Adafruit_DHT
@@ -21,14 +22,12 @@ def success(name):
 def loginstatus():
 	return myloginstatus.show()
 
-@app.route('/login',methods = ['POST', 'GET'])
+@app.route('/login',methods = ['POST'])
 def login():
    if request.method == 'POST':
-      session['username'] = request.form['nm'] 
-      return redirect('/')
-   else:
-      sessiom['username'] = request.args.get('nm')
-      return redirect('/')
+           ed=extractvalues.Extractdata_Config("../config.txt")
+           if ed.getUsername() == request.form['username'] and ed.getPassword() == request.form['password']
+                session['username'] = ed.getUsername() 
 
 @app.route('/')
 def index():

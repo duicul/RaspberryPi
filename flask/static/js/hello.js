@@ -17,7 +17,8 @@ function goodbye(){
   }
 
 function login()
-{}
+{$.post("/login",{user:$("#user_txt").val(),pass:$("#pass_txt").val()}, success: function(result){
+       window.location.replace("/");}});}
 
 
 function ajax_calls(){
