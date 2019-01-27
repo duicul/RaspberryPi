@@ -1,5 +1,5 @@
 from flask import Flask,session, redirect, url_for, request,render_template
-import extractvalue
+import configvalue
 #from gpiozero import LED
 from time import sleep
 #import Adafruit_DHT
@@ -40,6 +40,19 @@ def index():
 @app.route('/on')
 def turnon():
 	LED(47).on()
+
+@app.route('/getconfigdata')
+def getdata():
+	return configvalue.getconfigdata("../config.txt")
+
+@app.route('/setconfigdata')
+def setdata():
+        if request.method == 'POST':
+                user = request.form['user']
+                password = request.form['pass']
+                ip = request.form['ip']
+                port = request.form['port']
+                configvalue.setconfigdata(user,password,ip,port)
 
 @app.route('/board_status')
 def board_status():

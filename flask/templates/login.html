@@ -6,14 +6,14 @@
 <script src="/static/js/hello.js?v=1.1"></script>
 
 </head>
-<body onload="init_server(3000)">
+<body>
    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-	{% set e = ev.Extractdata_Config("../../config.txt") %}
      	{% if name=="anonymous" %}
 	<div class="navbar-brand">Try to login</div>
       {%else%}
 	<font color="blue" class="mr-auto link">{{name}}</font>
         <a class="btn btn-primary" onClick="stopajaxcalls()"  href="/logout">Logout</a>
+		<p id="config" onload="getconfigdata()"></p>
 	{%endif%}
    </nav>
       {% if name=="anonymous" %}

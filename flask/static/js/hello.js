@@ -24,6 +24,14 @@ update_data();
 function stopajaxcalls()
 {clearInterval(interval_calls);}
 
+function getconfigdata()
+ {$.ajax({url: "/getconfigdata", success: function(result){
+       $("#config").html(result);}});}
+	   
+function setconfigdata()
+ {$.post("/setconfigdata",{user:$("#username").val(),pass:$("#password").val(),ip:$("#ip").val(),port:$("#port").val()}, success: function(result){
+       alert("Config changed");}});}
+
  function board_status()
  {$.ajax({url: "/board_status", success: function(result){
        $("#board_status").html(result+" "+ind);
