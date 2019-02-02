@@ -48,6 +48,26 @@ class Extractdata_Config:
         except AttributeError:
             return ''
         file.close()
+
+    def getRefresh_In(self):
+        try:
+            file=open(self.file_name,'r')
+            data=file.read()
+            found = re.search('refresh_in=(.*)', data).group(1)
+            return found
+        except AttributeError:
+            return ''
+        file.close()
+
+    def getRefresh_Out(self):
+        try:
+            file=open(self.file_name,'r')
+            data=file.read()
+            found = re.search('refresh_out=(.*)', data).group(1)
+            return found
+        except AttributeError:
+            return ''
+        file.close()
         
 class Insertdata_Config:
     def __init__(self,file_name):
@@ -100,6 +120,30 @@ class Insertdata_Config:
             file.close()
             file=open(self.file_name,'w')
             found = re.sub('port=.*', 'port=%s' % port,data)
+            file.write(found)
+        except AttributeError:
+            pass
+        file.close()
+
+    def setRefresh_In(self,refresh):
+        try:
+            file=open(self.file_name,'r')
+            data=file.read()
+            file.close()
+            file=open(self.file_name,'w')
+            found = re.sub('refresh_in=.*', 'refresh_in=%s' % refresh,data)
+            file.write(found)
+        except AttributeError:
+            pass
+        file.close()
+
+    def setRefresh_Out(self,refresh):
+        try:
+            file=open(self.file_name,'r')
+            data=file.read()
+            file.close()
+            file=open(self.file_name,'w')
+            found = re.sub('refresh_out=.*', 'refresh_out=%s' % refresh,data)
             file.write(found)
         except AttributeError:
             pass

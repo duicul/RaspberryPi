@@ -3,10 +3,14 @@
 <script src="/static/js/jquery-3.3.1.js"></script>
 <script src="/static/js/bootstrap.js"></script>
 <link rel="stylesheet" href="/static/css/bootstrap.css">
-<script src="/static/js/hello.js?v=1.13"></script>
+<style>
+.settingscol{
+background-color:rgb(100,120,180);
+}
 
+</style>
 </head>
-<body onload="getconfigdata()">
+<body onload="getconfigdata();getwifidata()">
    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
      	{% if name=="anonymous" %}
 	<div class="navbar-brand">Try to login</div>
@@ -16,17 +20,36 @@
 	{%endif%}
    </nav>
       {% if name=="anonymous" %}
-        <form  method="post"> 
-	<p>UserName: <input type = "text" id = "user_txt" /></p>
-         <p>Password: <input type = "password" id = "pass_txt" /></p>
-	<input type="button"  class="btn btn-primary" onclick="login()" value="Login">
+     <div class="row">
+	<div class="col-3"></div>
+	<div class="col-6 settingscol">
+	<form id="login_form">
+	<div class="row"><div class="col-3">UserName: </div><div class="col-3"><input type = "text" id = "user_txt"/></div></div>
+    <div class="row"><div class="col-3">Password: </div><div class="col-3"><input type = "password" id = "pass_txt"/></p></div></div>
+	<input type="submit"  class="btn btn-primary" value="Login">
 	</form>
+	</div>	
+	<div class="col-3"></div>
+	</div>
 	{%else%}
-	<p id="config">some data</p>
-	<input type="button"  class="btn btn-primary" onclick="setconfigdata()" value="Apply">
+	<div class="row">
+	<div class="col-3"></div>
+	<div class="col-6 settingscol">
+	<form id="config_form">
+	<p id="config"></p>
+	<input type="submit"  class="btn btn-primary" onclick="" value="Apply config changes">
+	</form>
+	<form id="wifi_form">
+	<p id="wifi"></p>
+	<input type="submit"  class="btn btn-primary" onclick="" value="Apply wifi changes">
+	</form>
 	<p id="board_status"></p>
-	<p id="data_status"></p>        
+	<p id="data_status"></p>
+    </div>	
+	<div class="col-3"></div>
+	</div>
 {% endif %}   
 
+<script src="/static/js/hello.js?v=1.14"></script>
 </body>
 </html>

@@ -1,4 +1,0 @@
-username=duicul
-password=daniel
-ip=192.168.1.98
-port=8765

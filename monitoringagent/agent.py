@@ -3,17 +3,28 @@ import json
 import time
 import sys
 import random
+from extractvalues import Extractdata_Config,Insertdata_Config
 loop=0
-user="duicul"
-password="daniel"
-ip = sys.argv[1] if len(sys.argv)>1 else 'localhost'
-port = sys.argv[2] if len(sys.argv)>2 else 8765
+#user="duicul"
+#password="daniel"
+#ip = sys.argv[1] if len(sys.argv)>1 else 'localhost'
+#port = sys.argv[2] if len(sys.argv)>2 else 8765
+#refresh_in=30
+#refresh_out=1
 try:
-    while(loop<100):
+    while(True):
         print("Loop "+str(loop))
         loop=loop+1
-        time.sleep(1.2)
-        if loop<30:
+        time.sleep(1)
+        ed=Extractdata_Config("../config.txt")
+        insd=Insertdata_Config("../config.txt")
+        user=ed.getUsername()
+        password=ed.getPassword()
+        ip=ed.getIp()
+        port=ed.getPort()
+        refresh_in=int(ed.getRefresh_In())
+        refresh_out=int(ed.getRefresh_Out())
+        if loop<refresh_in and loop>=refresh_out:
             pins_dict={}
             pins_dict['data']="outputpins"
             pins_dict['user']=user
@@ -28,9 +39,9 @@ try:
                 try:
                     print(str(i)+"  "+str(y[str(i)]))
                 except KeyError:
-		    pass
+                    pass
                     #print("Not received "+str(i))
-        else :
+        elif loop>=refresh_in :
             loop=0
             pins_dict={}
             pins_dict['data']="pins"

@@ -1,4 +1,6 @@
-username=adas
-password=pass
-ip=31313
+username=duicul
+password=daniel
+ip=192.168.1.23
 port=6767
+refresh_out=3
+refresh_in=34

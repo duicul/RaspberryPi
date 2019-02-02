@@ -16,6 +16,9 @@ function goodbye(){
  {//interval_calls=setInterval(ajax_calls,period);
   }
 
+  $("#login_form").submit(function( event ) { console.log("loginform");event.preventDefault();login();})
+  $("#wifi_form").submit(function( event ) { console.log("configform");event.preventDefault();setwifidata();})
+  $("#config_form").submit(function( event ) { console.log("wifiform");event.preventDefault();setconfigdata();})
 function login()
 {console.log("logging in ...");
 var url="/login";
@@ -58,13 +61,39 @@ var url="/setconfigdata";
             if (this.readyState == 4 && this.status == 200) {
                 if(xmlhttp.responseText == "okay")
                 {getconfigdata();
-		alert("Configuration changed");}}
+				 alert("Configuration changed");}}
         };
     var formData = new FormData();
     formData.append("user",$("#username").val());
     formData.append("pass",$("#password").val());
     formData.append("ip",$("#ip").val());
     formData.append("port",$("#port").val());
+	formData.append("refresh_in",$("#refresh_in").val());
+	formData.append("refresh_out",$("#refresh_out").val());
+    xmlhttp.open("POST",url, true);
+        xmlhttp.send(formData);
+}
+
+function getwifidata()
+ {console.log("getwifidata");
+$.ajax({url: "/getwifidata", success: function(result){
+       $("#wifi").html(result);}
+	});
+}
+ 
+function setwifidata()
+ {console.log("setwifidata");
+var url="/setwifidata";
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                if(xmlhttp.responseText == "okay")
+                {getwifidata();
+				 alert("Wifi settings changed");}}
+        };
+    var formData = new FormData();
+    formData.append("wifi_ssid",$("#wifi_ssid").val());
+    formData.append("wifi_psk",$("#wifi_psk").val());
     xmlhttp.open("POST",url, true);
         xmlhttp.send(formData);
 }

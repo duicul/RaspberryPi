@@ -1,6 +1,7 @@
 from flask import Flask,session, redirect, url_for, request,render_template
-import configvalue
-import extractvalues
+from configvalue import getconfigdata,setconfigdata
+from wificonfigscript import getwifidata,setwifidata
+from extractvalues import Extractdata_Config
 #from gpiozero import LED
 from time import sleep
 #import Adafruit_DHT
@@ -25,13 +26,13 @@ def loginstatus():
 @app.route('/login',methods = ['POST'])
 def login():
    if request.method == 'POST':
-           ed=extractvalues.Extractdata_Config("../config.txt")
+           ed=Extractdata_Config("../config.txt")
            print(request.form['user_txt'])
-	   print(request.form['pass_txt'])
-	   if ed.getUsername() == request.form['user_txt'] and ed.getPassword() == request.form['pass_txt']:
-                session['username'] = ed.getUsername() 
-		print(session['username'])
-		return "okay"	
+           print(request.form['pass_txt'])
+           if ed.getUsername() == request.form['user_txt'] and ed.getPassword() == request.form['pass_txt']:
+                session['username'] = ed.getUsername()
+                print(session['username'])
+                return "okay"
    return "error" #redirect('/')
 @app.route('/')
 def index():
@@ -46,20 +47,37 @@ def turnon():
 
 @app.route('/getconfigdata')
 def getdata():
-	return configvalue.getconfigdata("../config.txt")
+	return getconfigdata("../config.txt")
 
 @app.route('/setconfigdata',methods = ['POST'])
 def setdata():
         if request.method == 'POST':
                 print("set config data method = post ")
-		user = request.form['user']
+                user = request.form['user']
                 password = request.form['pass']
                 ip = request.form['ip']
                 port = request.form['port']
-                print(str(user)+" "+str(password)+" "+str(ip)+" "+str(port))
-		configvalue.setconfigdata(user,password,ip,port)
-		print("config data set")
-		return "okay"
+                refresh_in = request.form['refresh_in']
+                refresh_out = request.form['refresh_out']
+                print(str(user)+" "+str(password)+" "+str(ip)+" "+str(port)+" "+str(refresh_in)+" "+str(refresh_out))
+                setconfigdata("../config.txt",user,password,ip,port,refresh_in,refresh_out)
+                print("config data set")
+                return "okay"
+
+@app.route('/getwifidata')
+def getdata_wifi():
+	return getwifidata("../wpa_supplicant.conf")
+
+@app.route('/setwifidata',methods = ['POST'])
+def setdata_wifi():
+        if request.method == 'POST':
+                print("set wifi data method = post ")
+                ssid = request.form['wifi_ssid']
+                psk = request.form['wifi_psk']
+                print(str(ssid)+" "+str(psk))
+                setwifidata("../wpa_supplicant.conf",ssid,psk)
+                print("config wifi set")
+                return "okay"
 
 @app.route('/board_status')
 def board_status():
