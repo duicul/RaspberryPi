@@ -1,14 +1,15 @@
 import sys
-from gpiozero import LED
-from time import sleep
+import RPi.GPIO as GPIO
+
+GPIO.setmode(GPIO.BOARD)
 
 def outputpinon(pin):
-    led = LED(pin)
-    led.on()
+    GPIO.setup(pin, GPIO.OUT)
+    GPIO.output(pin, True)
 
 def outputpinoff(pin):
-    led = LED(pin)
-    led.off()
+    GPIO.setup(pin, GPIO.OUT)
+    GPIO.output(pin, False)
 
 if __name__ == "__main__":
     print(sys.argv)
@@ -19,3 +20,6 @@ if __name__ == "__main__":
     elif val=="on" :
         outputpinon(pin)
     else : print("option unknown")
+    while(True):
+          pass
+    GPIO.cleanup()

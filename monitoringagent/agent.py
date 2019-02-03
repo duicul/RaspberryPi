@@ -4,7 +4,9 @@ import time
 import sys
 import random
 from extractvalues import Extractdata_Config,Insertdata_Config
-loop=0
+from outputpin import outputpinon,outputpinoff
+loop1=0
+loop2=0
 #user="duicul"
 #password="daniel"
 #ip = sys.argv[1] if len(sys.argv)>1 else 'localhost'
@@ -13,8 +15,9 @@ loop=0
 #refresh_out=1
 try:
     while(True):
-        print("Loop "+str(loop))
-        loop=loop+1
+        print("Loop "+str(loop1)+" "+str(loop2))
+        loop1=loop1+1
+        loop2=loop2+1
         time.sleep(1)
         ed=Extractdata_Config("../config.txt")
         insd=Insertdata_Config("../config.txt")
@@ -24,8 +27,9 @@ try:
         port=ed.getPort()
         refresh_in=int(ed.getRefresh_In())
         refresh_out=int(ed.getRefresh_Out())
-        if loop<refresh_in and loop>=refresh_out:
-            pins_dict={}
+        if loop1>=refresh_out:
+            loop1=0
+	    pins_dict={}
             pins_dict['data']="outputpins"
             pins_dict['user']=user
             pins_dict['password']=password
@@ -35,14 +39,19 @@ try:
             print(r.text)
             y=json.loads(r.text)
             print(y)
-            for i in range(21):
+	    outpins=[]
+            for i in range(40):
                 try:
                     print(str(i)+"  "+str(y[str(i)]))
-                except KeyError:
+                    if y[str(i)]== 1:
+	                print("outputpinon")
+                        outputpinon(int(i))
+		    else : outputpinoff(int(i))
+		except KeyError:
                     pass
                     #print("Not received "+str(i))
-        elif loop>=refresh_in :
-            loop=0
+        if loop2>=refresh_in :
+            loop2=0
             pins_dict={}
             pins_dict['data']="pins"
             pins_dict['user']=user
@@ -58,7 +67,7 @@ try:
             print(in_pins)
             print(out_pins)
             inpins_list=[]
-            for i in range(21):
+            for i in range(40):
                 try:
                     print(str(i)+"  "+str(in_pins[str(i)]))
                     inpins_list.append([str(i),str(in_pins[str(i)])])        
