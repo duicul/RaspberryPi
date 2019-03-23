@@ -1,6 +1,6 @@
 username=duicul
-password=daniel
-ip=192.168.0.100
-port=8765
+password=6eae69de3472e6b8e395f79ee9d467623e23c55a735bd2f7d24ef1c757a1a54c
+ip=31313
+port=6767
+refresh_in=40
 refresh_out=1
-refresh_in=34

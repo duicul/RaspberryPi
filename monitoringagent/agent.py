@@ -7,8 +7,10 @@ from extractvalues import Extractdata_Config,Insertdata_Config
 from outputpin import outputpinon,outputpinoff
 loop1=0
 loop2=0
+
+#set(a) - set(b) for motion pins not used anymore
+
 #user="duicul"
-#password="daniel"
 #ip = sys.argv[1] if len(sys.argv)>1 else 'localhost'
 #port = sys.argv[2] if len(sys.argv)>2 else 8765
 #refresh_in=30
@@ -22,7 +24,6 @@ try:
         ed=Extractdata_Config("../config.txt")
         insd=Insertdata_Config("../config.txt")
         user=ed.getUsername()
-        password=ed.getPassword()
         ip=ed.getIp()
         port=ed.getPort()
         refresh_in=int(ed.getRefresh_In())
@@ -32,7 +33,6 @@ try:
 	    pins_dict={}
             pins_dict['data']="outputpins"
             pins_dict['user']=user
-            pins_dict['password']=password
             addr='http://'+str(ip)+":"+str(port)+"/outputpinsstatus"
             print(addr)
             r = requests.post(addr,json.dumps(pins_dict))
@@ -55,7 +55,6 @@ try:
             pins_dict={}
             pins_dict['data']="pins"
             pins_dict['user']=user
-            pins_dict['password']=password
             addr='http://'+str(ip)+":"+str(port)+"/pinsstatus"
             print(addr)
             r = requests.post(addr,json.dumps(pins_dict))
@@ -80,7 +79,6 @@ try:
             pins_dict={}
             pins_dict['data']="inputpins"
             pins_dict['user']=user
-            pins_dict['password']=password
             for i in inpins_list:
                 pins_dict[i[0]]=random.random()*40
             data=json.dumps(pins_dict)
