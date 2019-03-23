@@ -1,4 +1,5 @@
 import re
+import hashlib
 class Extractdata_Config:
     def __init__(self,file_name):
         self.file_name=file_name
@@ -18,6 +19,13 @@ class Extractdata_Config:
         except AttributeError:
             return ''
         file.close()
+        
+    def testPassword(self,password):
+        m = hashlib.sha256()
+        m.update(password.encode())
+        t=m.hexdigest()
+        filepass=self.getPassword()
+        return t==filepass
             
     def getPassword(self):
         try:
@@ -90,12 +98,15 @@ class Insertdata_Config:
         
         
     def setPassword(self,password):
+        m = hashlib.sha256()
+        m.update(password.encode())
+        t=m.hexdigest()
         try:
             file=open(self.file_name,'r')
             data=file.read()
             file.close()
             file=open(self.file_name,'w')
-            found = re.sub('password=.*', 'password=%s' % password,data)
+            found = re.sub('password=.*', 'password=%s' % t,data)
             file.write(found)
         except AttributeError:
             pass
@@ -150,14 +161,18 @@ class Insertdata_Config:
         file.close()
 
 if __name__ == '__main__':
-    ed=Extractdata_Config("config.txt")
-    insd=Insertdata_Config("config.txt")
+    ed=Extractdata_Config("../config.txt")
+    insd=Insertdata_Config("../config.txt")
     print(ed.getFile())
-    insd.setUsername("adas")
-    insd.setPassword("pass")
+    insd.setUsername("duicul")
+    insd.setPassword("daniel")
     insd.setIp("31313")
     insd.setPort(6767)
+    insd.setRefresh_In(40)
+    insd.setRefresh_Out(1)
+    print(ed.testPassword("daniel"))
     print(ed.getUsername())
     print(ed.getPassword())
     print(ed.getIp())
     print(ed.getPort())
+    print(ed.getFile())

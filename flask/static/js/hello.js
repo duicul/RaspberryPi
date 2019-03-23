@@ -19,6 +19,7 @@ function goodbye(){
   $("#login_form").submit(function( event ) { console.log("loginform");event.preventDefault();login();})
   $("#wifi_form").submit(function( event ) { console.log("configform");event.preventDefault();setwifidata();})
   $("#config_form").submit(function( event ) { console.log("wifiform");event.preventDefault();setconfigdata();})
+  $("#logindata_form").submit(function( event ) { console.log("logindataform");event.preventDefault();setpassworddata();})
 function login()
 {console.log("logging in ...");
 var url="/login";
@@ -53,6 +54,13 @@ $.ajax({url: "/getconfigdata", success: function(result){
 	});
 }
  
+function getpassworddata()
+ {console.log("getpassworddata");
+$.ajax({url: "/getpassworddata", success: function(result){
+       $("#passconfig").html(result);}
+	});
+} 
+ 
 function setconfigdata()
  {
 var url="/setconfigdata";
@@ -73,6 +81,23 @@ var url="/setconfigdata";
     xmlhttp.open("POST",url, true);
         xmlhttp.send(formData);
 }
+
+function setpassworddata()
+{var url="/changeuserpassword";
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                if(xmlhttp.responseText == "okay")
+                {getconfigdata();
+				 alert("Password changed");}}
+        };
+    var formData = new FormData();
+    formData.append("user",$("#username").val());
+    formData.append("pass",$("#password").val());
+    xmlhttp.open("POST",url, true);
+        xmlhttp.send(formData);
+}
+
 
 function getwifidata()
  {console.log("getwifidata");

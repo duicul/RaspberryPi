@@ -1,5 +1,5 @@
 from flask import Flask,session, redirect, url_for, request,render_template
-from configvalue import getconfigdata,setconfigdata
+from configvalue import getconfigdata,setconfigdata,setpassword,getpassworddata
 from wificonfigscript import getwifidata,setwifidata
 from extractvalues import Extractdata_Config
 #from gpiozero import LED
@@ -29,7 +29,7 @@ def login():
            ed=Extractdata_Config("../config.txt")
            print(request.form['user_txt'])
            print(request.form['pass_txt'])
-           if ed.getUsername() == request.form['user_txt'] and ed.getPassword() == request.form['pass_txt']:
+           if ed.getUsername() == request.form['user_txt'] and ed.testPassword(request.form['pass_txt']):
                 session['username'] = ed.getUsername()
                 print(session['username'])
                 return "okay"
@@ -49,6 +49,10 @@ def turnon():
 def getdata():
 	return getconfigdata("../config.txt")
 
+@app.route('/getpassworddata')
+def getpassdata():
+	return getpassworddata("../config.txt")
+
 @app.route('/setconfigdata',methods = ['POST'])
 def setdata():
         if request.method == 'POST':
@@ -61,6 +65,15 @@ def setdata():
                 refresh_out = request.form['refresh_out']
                 print(str(user)+" "+str(password)+" "+str(ip)+" "+str(port)+" "+str(refresh_in)+" "+str(refresh_out))
                 setconfigdata("../config.txt",user,password,ip,port,refresh_in,refresh_out)
+                print("config data set")
+                return "okay"
+
+@app.route('/changeuserpassword',methods = ['POST'])
+def setpass():
+        if request.method == 'POST':
+                user = request.form['user']
+                password = request.form['pass']
+                setpassword("../config.txt",user,password)
                 print("config data set")
                 return "okay"
 

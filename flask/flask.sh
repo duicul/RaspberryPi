@@ -1,6 +1,6 @@
 #!/bin/bash
 echo $#
-str=Hello.py
+str=Login.py
 if test $# -ge 1
 then str=$1
 fi
