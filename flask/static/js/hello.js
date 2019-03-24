@@ -20,6 +20,7 @@ function goodbye(){
   $("#wifi_form").submit(function( event ) { console.log("configform");event.preventDefault();setwifidata();})
   $("#config_form").submit(function( event ) { console.log("wifiform");event.preventDefault();setconfigdata();})
   $("#logindata_form").submit(function( event ) { console.log("logindataform");event.preventDefault();setpassworddata();})
+  
 function login()
 {console.log("logging in ...");
 var url="/login";
@@ -50,14 +51,24 @@ function stopajaxcalls()
 function getconfigdata()
  {console.log("getconfigdata");
 $.ajax({url: "/getconfigdata", success: function(result){
-       $("#config").html(result);}
+       $("#config").html(result);
+	   $("#config_form").submit(function( event ) { console.log("wifiform");event.preventDefault();setconfigdata();})
+	   }
 	});
+}
+ 
+function init()
+{$("#login_form").submit(function( event ) { console.log("loginform");event.preventDefault();login();})
+  $("#wifi_form").submit(function( event ) { console.log("configform");event.preventDefault();setwifidata();})
+  $("#config_form").submit(function( event ) { console.log("wifiform");event.preventDefault();setconfigdata();})
+  $("#logindata_form").submit(function( event ) { console.log("logindataform");event.preventDefault();setpassworddata();})
 }
  
 function getpassworddata()
  {console.log("getpassworddata");
 $.ajax({url: "/getpassworddata", success: function(result){
-       $("#passconfig").html(result);}
+       $("#passconfig").html(result);
+	   $("#logindata_form").submit(function( event ) { console.log("logindataform");event.preventDefault();setpassworddata();})}
 	});
 } 
  
@@ -102,7 +113,8 @@ function setpassworddata()
 function getwifidata()
  {console.log("getwifidata");
 $.ajax({url: "/getwifidata", success: function(result){
-       $("#wifi").html(result);}
+       $("#wifi").html(result);
+	   $("#wifi_form").submit(function( event ) { console.log("configform");event.preventDefault();setwifidata();})}
 	});
 }
  
@@ -135,4 +147,5 @@ function update_data(){
  function loginstatus(){
  $.ajax({url: "/loginstatus.py", success: function(result){
        alert(result);
+	   $("#login_form").submit(function( event ) { console.log("loginform");event.preventDefault();login();})
     }}); } 

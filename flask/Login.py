@@ -108,9 +108,3 @@ def logout():
 if __name__ == '__main__':
    app.run(debug = True,host='0.0.0.0')
 
-
-#def read_temp(pin):
-#	sensor = Adafruit_DHT.DHT11
-#	humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
-#	print(str(humidity)+"  "+str(temperature))
-
