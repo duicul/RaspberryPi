@@ -5,17 +5,13 @@ import sys
 import random
 from extractvalues import Extractdata_Config,Insertdata_Config
 from outputpin import outputpinon,outputpinoff
-from inputpin import readDHT11,readDHT22
+from inputpin import readDHT11,readDHT22,set_pir_pins
+from pinconfig import pin_to_GPIO,GPIO_to_pin
 loop1=0
 loop2=0
 
-#set(a) - set(b) for motion pins not used anymore
+#all pin numbers from protocol are GPIO
 
-#user="duicul"
-#ip = sys.argv[1] if len(sys.argv)>1 else 'localhost'
-#port = sys.argv[2] if len(sys.argv)>2 else 8765
-#refresh_in=30
-#refresh_out=1
 try:
     while(True):
         print("Loop "+str(loop1)+" "+str(loop2))
@@ -45,9 +41,9 @@ try:
                 try:
                     print(str(i)+"  "+str(y[str(i)]))
                     if y[str(i)]== 1:
-	                print("outputpinon")
-                        outputpinon(int(i))
-		    else : outputpinoff(int(i))
+                        outputpinon(GPIO_to_pin(int(i)))
+		    else :
+                        outputpinoff(GPIO_to_pin(int(i)))
 		except KeyError:
                     pass
                     #print("Not received "+str(i))
@@ -67,7 +63,7 @@ try:
             print(in_pins)
             print(out_pins)
             inpins_list=[]
-            for i in range(40):
+            for i in range(1,27):
                 try:
                     print(str(i)+"  "+str(in_pins[str(i)]))
                     inpins_list.append([str(i),str(in_pins[str(i)])])        
@@ -80,13 +76,17 @@ try:
             pins_dict={}
             pins_dict['data']="inputpins"
             pins_dict['user']=user
+            pir_list=[]
             for i in inpins_list:
                 if i[1]=="DHT11":
-                    pins_dict[i[0]]=readDHT11(i[0])[0]
+                    pins_dict[i[0]]=readDHT11(GPIO_to_pin(int(i[0])))[0]
                 elif i[1]=="DHT22":
-                    pins_dict[i[0]]=readDHT22(i[0])[0]
+                    pins_dict[i[0]]=readDHT22(GPIO_to_pin(int(i[0])))[0]
+                elif i[1]=="PIR":
+                    pir_list.append(i[0])                
                 else:
                     pins_dict[i[0]]=random.random()*40
+            set_pir_pins(pir_list.map(GPIO_to_pin))
             data=json.dumps(pins_dict)
             addr='http://'+str(ip)+":"+str(port)+"/inputpinsstatus"
             print(addr)
