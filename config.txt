@@ -1,6 +1,6 @@
 username=duicul
-password=6eae69de3472e6b8e395f79ee9d467623e23c55a735bd2f7d24ef1c757a1a54c
-ip=31313
+password=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+ip=192.168.1.4
 port=6767
-refresh_in=40
+refresh_in=30
 refresh_out=1

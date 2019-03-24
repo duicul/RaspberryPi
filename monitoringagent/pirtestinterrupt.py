@@ -2,17 +2,17 @@
 import sys
 import RPi.GPIO as GPIO
 
-pin=sys.argv[1]
+
+pin=int(sys.argv[1])
 print("pin for PIR "+str(pin))
-GPIO.setup(pin, GPIO.IN)
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(pin, GPIO.IN,pull_up_down=GPIO.PUD_DOWN)
 
 def callback_pin(channel):
     print("pin activated")
 
 GPIO.add_event_detect(pin, GPIO.RISING)
-GPIO.add_event_callback(pin,callbackpin)
-
-sensor = Adafruit_DHT.DHT22
+GPIO.add_event_callback(pin,callback_pin)
 
 while(True):
     pass
