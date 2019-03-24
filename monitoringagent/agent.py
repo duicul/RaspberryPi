@@ -5,6 +5,7 @@ import sys
 import random
 from extractvalues import Extractdata_Config,Insertdata_Config
 from outputpin import outputpinon,outputpinoff
+from inputpin import readDHT11,readDHT22
 loop1=0
 loop2=0
 
@@ -80,7 +81,12 @@ try:
             pins_dict['data']="inputpins"
             pins_dict['user']=user
             for i in inpins_list:
-                pins_dict[i[0]]=random.random()*40
+                if i[1]=="DHT11":
+                    pins_dict[i[0]]=readDHT11(i[0])[0]
+                elif i[1]=="DHT22":
+                    pins_dict[i[0]]=readDHT22(i[0])[0]
+                else:
+                    pins_dict[i[0]]=random.random()*40
             data=json.dumps(pins_dict)
             addr='http://'+str(ip)+":"+str(port)+"/inputpinsstatus"
             print(addr)
