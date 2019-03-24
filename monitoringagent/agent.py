@@ -37,7 +37,7 @@ try:
             y=json.loads(r.text)
             print(y)
 	    outpins=[]
-            for i in range(40):
+            for i in range(1,27):
                 try:
                     print(str(i)+"  "+str(y[str(i)]))
                     if y[str(i)]== 1:
@@ -79,13 +79,17 @@ try:
             pir_list=[]
             for i in inpins_list:
                 if i[1]=="DHT11":
-                    pins_dict[i[0]]=readDHT11(GPIO_to_pin(int(i[0])))[0]
+                    val=readDHT11(GPIO_to_pin(int(i[0])))
+                    if val[0] != None and val[1] != None:
+                        pins_dict[i[0]]=str(val[0])+" "+str(val[1])
                 elif i[1]=="DHT22":
-                    pins_dict[i[0]]=readDHT22(GPIO_to_pin(int(i[0])))[0]
+                    val=readDHT22(GPIO_to_pin(int(i[0])))
+                    if val[0] != None and val[1] != None:
+                        pins_dict[i[0]]=str(val[0])+" "+str(val[1])
                 elif i[1]=="PIR":
                     pir_list.append(i[0])                
                 else:
-                    pins_dict[i[0]]=random.random()*40
+                    pins_dict[i[0]]=str(random.random()*40)
             set_pir_pins(pir_list.map(GPIO_to_pin))
             data=json.dumps(pins_dict)
             addr='http://'+str(ip)+":"+str(port)+"/inputpinsstatus"

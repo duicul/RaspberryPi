@@ -31,12 +31,12 @@ def set_pir_pins(pir_pin_list):
 def readDHT11(pin):
     sensor=Adafruit_DHT.DHT11
     humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
-    return (humidity,temperature)
+    return (temperature,humidity)
 
 def readDHT22(pin):
     sensor=Adafruit_DHT.DHT22
     humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
-    return (humidity,temperature)
+    return (temperature,humidity)
 
 if __name__ == "__main__":
     print('Test')
