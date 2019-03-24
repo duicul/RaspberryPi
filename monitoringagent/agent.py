@@ -35,7 +35,7 @@ try:
             r = requests.post(addr,json.dumps(pins_dict))
             print(r.text)
             y=json.loads(r.text)
-            print(y)
+            #print(y)
 	    outpins=[]
             for i in range(1,27):
                 try:
@@ -53,19 +53,19 @@ try:
             pins_dict['data']="pins"
             pins_dict['user']=user
             addr='http://'+str(ip)+":"+str(port)+"/pinsstatus"
-            print(addr)
+           # print(addr)
             r = requests.post(addr,json.dumps(pins_dict))
-            print(r.text)
+           # print(r.text)
             y=json.loads(r.text)
             in_pins=json.loads(y['IN'])
             out_pins=json.loads(y['OUT'])
-            print(y)
+            #print(y)
             print(in_pins)
             print(out_pins)
             inpins_list=[]
             for i in range(1,27):
                 try:
-                    print(str(i)+"  "+str(in_pins[str(i)]))
+                    #print(str(i)+"  "+str(in_pins[str(i)]))
                     inpins_list.append([str(i),str(in_pins[str(i)])])        
                 except KeyError:
                     try:
@@ -77,20 +77,25 @@ try:
             pins_dict['data']="inputpins"
             pins_dict['user']=user
             pir_list=[]
+	    print(inpins_list)
             for i in inpins_list:
+		print(i)
                 if i[1]=="DHT11":
-                    val=readDHT11(GPIO_to_pin(int(i[0])))
+                    val=readDHT11(int(i[0]))
+		    print(val)
                     if val[0] != None and val[1] != None:
                         pins_dict[i[0]]=str(val[0])+" "+str(val[1])
                 elif i[1]=="DHT22":
-                    val=readDHT22(GPIO_to_pin(int(i[0])))
+                    val=readDHT22(int(i[0]))
+		    print(val)
                     if val[0] != None and val[1] != None:
                         pins_dict[i[0]]=str(val[0])+" "+str(val[1])
                 elif i[1]=="PIR":
                     pir_list.append(i[0])                
                 else:
                     pins_dict[i[0]]=str(random.random()*40)
-            set_pir_pins(pir_list.map(GPIO_to_pin))
+            print(pins_dict)
+	    set_pir_pins(map(GPIO_to_pin,pir_list))
             data=json.dumps(pins_dict)
             addr='http://'+str(ip)+":"+str(port)+"/inputpinsstatus"
             print(addr)

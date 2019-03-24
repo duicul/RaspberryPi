@@ -19,7 +19,7 @@ def sendpirdata(channel):
     print("send pir data "+str(channel)+" "+str(data))
 
 def set_pir_pins(pir_pin_list):
-    pins_to_remove=list(set(pir_list)-set(pir_pin_list)
+    pins_to_remove=list(set(pir_list)-set(pir_pin_list))
     pins_to_add=list(set(pir_pin_list)-set(pir_list))
     for i in pins_to_remove:
                         GPIO.remove_event_detect(int(i))
