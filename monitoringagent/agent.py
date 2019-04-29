@@ -6,13 +6,14 @@ import random
 import traceback
 from extractvalues import Extractdata_Config,Insertdata_Config
 from outputpin import outputpinon,outputpinoff
-from inputpin import readDHT11,readDHT22,set_pir_pins,init
+from inputpin import PinInput
 from pinconfig import pin_to_GPIO,GPIO_to_pin
 loop1=0
 loop2=0
 
+
 #all pin numbers from protocol are GPIO
-init()
+pininput=PinInput()
 try:
     while(True):
         print("Loop "+str(loop1)+" "+str(loop2))
@@ -93,12 +94,12 @@ try:
             for i in inpins_list:
                 print(i)
                 if i[1]=="DHT11":
-                    val=readDHT11(int(i[0]))
+                    val=pininput.readDHT11(int(i[0]))
                     print(val)
                     if val[0] != None and val[1] != None:
                         pins_dict[i[0]]=str(val[0])+" "+str(val[1])
                 elif i[1]=="DHT22":
-                    val=readDHT22(int(i[0]))
+                    val=pininput.readDHT22(int(i[0]))
                     print(val)
                     if val[0] != None and val[1] != None:
                         pins_dict[i[0]]=str(val[0])+" "+str(val[1])
@@ -107,7 +108,7 @@ try:
                 else:
                     pins_dict[i[0]]=str(random.random()*40)
             print(pins_dict)
-            set_pir_pins(map(GPIO_to_pin,pir_list))
+            pininput.set_pir_pins(map(GPIO_to_pin,pir_list))
             data=json.dumps(pins_dict)
             addr='http://'+str(ip)+":"+str(port)+"/inputpinsstatus"
             print(addr)
