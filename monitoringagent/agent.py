@@ -27,7 +27,7 @@ try:
         refresh_out=int(ed.getRefresh_Out())
         if loop1>=refresh_out:
             loop1=0
-	    pins_dict={}
+            pins_dict={}
             pins_dict['data']="outputpins"
             pins_dict['user']=user
             addr='http://'+str(ip)+":"+str(port)+"/outputpinsstatus"
@@ -36,17 +36,25 @@ try:
             print(r.text)
             y=json.loads(r.text)
             #print(y)
-	    outpins=[]
+            outpins=[]
+            print("First method")
+            for pin in y :
+                print(pin+"  "+str(y[pin]))
+                if y[pin]== 1:
+                        outputpinon(GPIO_to_pin(int(i)))
+                else :
+                        outputpinoff(GPIO_to_pin(int(i)))
+            '''print("Second method")
             for i in range(1,27):
                 try:
                     print(str(i)+"  "+str(y[str(i)]))
                     if y[str(i)]== 1:
                         outputpinon(GPIO_to_pin(int(i)))
-		    else :
+					else :
                         outputpinoff(GPIO_to_pin(int(i)))
-		except KeyError:
+				except KeyError:
                     pass
-                    #print("Not received "+str(i))
+                    #print("Not received "+str(i))'''
         if loop2>=refresh_in :
             loop2=0
             pins_dict={}
@@ -63,7 +71,9 @@ try:
             print(in_pins)
             print(out_pins)
             inpins_list=[]
-            for i in range(1,27):
+            for in_pin in in_pins :
+                inpins_list.append([str(in_pin),str(in_pins[in_pin])])
+            '''for i in range(1,27):
                 try:
                     #print(str(i)+"  "+str(in_pins[str(i)]))
                     inpins_list.append([str(i),str(in_pins[str(i)])])        
@@ -72,22 +82,22 @@ try:
                         print(str(i)+"  "+str(out_pins[str(i)]))
                     except KeyError:
                         pass
-			#print("Not received "+str(i))
+			#print("Not received "+str(i))'''
             pins_dict={}
             pins_dict['data']="inputpins"
             pins_dict['user']=user
             pir_list=[]
-	    print(inpins_list)
+            print(inpins_list)
             for i in inpins_list:
-		print(i)
+                print(i)
                 if i[1]=="DHT11":
                     val=readDHT11(int(i[0]))
-		    print(val)
+                    print(val)
                     if val[0] != None and val[1] != None:
                         pins_dict[i[0]]=str(val[0])+" "+str(val[1])
                 elif i[1]=="DHT22":
                     val=readDHT22(int(i[0]))
-		    print(val)
+                    print(val)
                     if val[0] != None and val[1] != None:
                         pins_dict[i[0]]=str(val[0])+" "+str(val[1])
                 elif i[1]=="PIR":
@@ -95,7 +105,7 @@ try:
                 else:
                     pins_dict[i[0]]=str(random.random()*40)
             print(pins_dict)
-	    set_pir_pins(map(GPIO_to_pin,pir_list))
+            set_pir_pins(map(GPIO_to_pin,pir_list))
             data=json.dumps(pins_dict)
             addr='http://'+str(ip)+":"+str(port)+"/inputpinsstatus"
             print(addr)
