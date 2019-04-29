@@ -3,15 +3,16 @@ import json
 import time
 import sys
 import random
+import traceback
 from extractvalues import Extractdata_Config,Insertdata_Config
 from outputpin import outputpinon,outputpinoff
-from inputpin import readDHT11,readDHT22,set_pir_pins
+from inputpin import readDHT11,readDHT22,set_pir_pins,init
 from pinconfig import pin_to_GPIO,GPIO_to_pin
 loop1=0
 loop2=0
 
 #all pin numbers from protocol are GPIO
-
+init()
 try:
     while(True):
         print("Loop "+str(loop1)+" "+str(loop2))
@@ -35,15 +36,16 @@ try:
             r = requests.post(addr,json.dumps(pins_dict))
             print(r.text)
             y=json.loads(r.text)
-            #print(y)
+            print(y)
             outpins=[]
             print("First method")
             for pin in y :
-                print(pin+"  "+str(y[pin]))
+                print("pin "+pin+"  value "+str(y[pin]))
                 if y[pin]== 1:
-                        outputpinon(GPIO_to_pin(int(i)))
+                        outputpinon(GPIO_to_pin(int(pin)))
                 else :
-                        outputpinoff(GPIO_to_pin(int(i)))
+                        outputpinoff(GPIO_to_pin(int(pin)))
+            print("okay")
             '''print("Second method")
             for i in range(1,27):
                 try:
@@ -112,4 +114,4 @@ try:
             r = requests.post(addr,data)
 except Exception as e:
     print("Main server is down")
-    print(e)
+    print(traceback.format_exc())

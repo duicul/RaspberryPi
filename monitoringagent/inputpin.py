@@ -4,6 +4,9 @@ import RPi.GPIO as GPIO
 
 pir_list=[]
 
+def init():
+    pir_list=[]
+
 def sendpirdata(channel):
     ed=Extractdata_Config("../config.txt")
     user=ed.getUsername()
@@ -19,13 +22,19 @@ def sendpirdata(channel):
     print("send pir data "+str(channel)+" "+str(data))
 
 def set_pir_pins(pir_pin_list):
-    pins_to_remove=list(set(pir_list)-set(pir_pin_list))
-    pins_to_add=list(set(pir_pin_list)-set(pir_list))
+    print("pir pins received "+str(pir_pin_list))
+    pins_to_remove=list(set(global pir_list)-set(pir_pin_list))
+    pins_to_add=list(set(pir_pin_list)-set(global pir_list))
+    print("current pin list "+str(global pir_list))
+    print("pirpins to add "+str(pins_to_add))
+    print("pirpins to remove"+str(pins_to_remove))
+    global pir_list=global pir_list+pins_to_add
     for i in pins_to_remove:
+                        (global pir_list).remove(i)
                         GPIO.remove_event_detect(int(i))
-                        GPIO.cleanup(channel)
+                        GPIO.cleanup(int(i))
     for i in pins_to_add:
-                        GPIO.setup(channel, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+                        GPIO.setup(int(i), GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
                         GPIO.add_event_detect(int(i), GPIO.RISING, callback=sendpirdata, bouncetime=200)
 
 def readDHT11(pin):
