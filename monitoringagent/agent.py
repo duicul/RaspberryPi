@@ -6,14 +6,15 @@ import random
 import traceback
 from extractvalues import Extractdata_Config,Insertdata_Config
 from outputpin import outputpinon,outputpinoff
-from inputpin import PinInput
+from inputpin import InputPin
 from pinconfig import pin_to_GPIO,GPIO_to_pin
 loop1=0
 loop2=0
 
 
 #all pin numbers from protocol are GPIO
-pininput=PinInput()
+pininput=InputPin()
+init = True
 try:
     while(True):
         print("Loop "+str(loop1)+" "+str(loop2))
@@ -27,7 +28,7 @@ try:
         port=ed.getPort()
         refresh_in=int(ed.getRefresh_In())
         refresh_out=int(ed.getRefresh_Out())
-        if loop1>=refresh_out:
+        if loop1>=refresh_out or init:
             loop1=0
             pins_dict={}
             pins_dict['data']="outputpins"
@@ -58,7 +59,7 @@ try:
 				except KeyError:
                     pass
                     #print("Not received "+str(i))'''
-        if loop2>=refresh_in :
+        if loop2>=refresh_in or init:
             loop2=0
             pins_dict={}
             pins_dict['data']="pins"
@@ -113,6 +114,7 @@ try:
             addr='http://'+str(ip)+":"+str(port)+"/inputpinsstatus"
             print(addr)
             r = requests.post(addr,data)
+        init = False
 except Exception as e:
     print("Main server is down")
     print(traceback.format_exc())
