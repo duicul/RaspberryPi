@@ -28,6 +28,7 @@ try:
         port=ed.getPort()
         refresh_in=int(ed.getRefresh_In())
         refresh_out=int(ed.getRefresh_Out())
+        logtime=int(ed.getLogTime())
         if loop1>=refresh_out or init:
             loop1=0
             pins_dict={}
@@ -90,6 +91,7 @@ try:
             pins_dict={}
             pins_dict['data']="inputpins"
             pins_dict['user']=user
+            pins_dict['logtime']=logtime
             pir_list=[]
             print(inpins_list)
             for i in inpins_list:

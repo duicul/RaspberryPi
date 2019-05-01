@@ -63,8 +63,9 @@ def setdata():
                 port = request.form['port']
                 refresh_in = request.form['refresh_in']
                 refresh_out = request.form['refresh_out']
-                print(str(user)+" "+str(password)+" "+str(ip)+" "+str(port)+" "+str(refresh_in)+" "+str(refresh_out))
-                setconfigdata("../config.txt",user,password,ip,port,refresh_in,refresh_out)
+                logtime = request.form['logtime']
+                print(str(user)+" "+str(password)+" "+str(ip)+" "+str(port)+" "+str(refresh_in)+" "+str(refresh_out)+" "+str(logtime))
+                setconfigdata("../config.txt",user,password,ip,port,refresh_in,refresh_out,logtime)
                 print("config data set")
                 return "okay"
 

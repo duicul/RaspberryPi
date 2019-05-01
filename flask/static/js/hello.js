@@ -89,6 +89,7 @@ var url="/setconfigdata";
     formData.append("port",$("#port").val());
 	formData.append("refresh_in",$("#refresh_in").val());
 	formData.append("refresh_out",$("#refresh_out").val());
+	formData.append("logtime",$("#logtime").val());
     xmlhttp.open("POST",url, true);
         xmlhttp.send(formData);
 }
