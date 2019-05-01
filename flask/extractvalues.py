@@ -76,6 +76,16 @@ class Extractdata_Config:
         except AttributeError:
             return ''
         file.close()
+
+    def getLogTime(self):
+        try:
+            file=open(self.file_name,'r')
+            data=file.read()
+            found = re.search('logtime=(.*)', data).group(1)
+            return found
+        except AttributeError:
+            return ''
+        file.close()
         
 class Insertdata_Config:
     def __init__(self,file_name):
@@ -160,16 +170,29 @@ class Insertdata_Config:
             pass
         file.close()
 
+    def setLogTime(self,logtime):
+        try:
+            file=open(self.file_name,'r')
+            data=file.read()
+            file.close()
+            file=open(self.file_name,'w')
+            found = re.sub('logtime=.*', 'logtime=%s' % logtime,data)
+            file.write(found)
+        except AttributeError:
+            pass
+        file.close()
+
 if __name__ == '__main__':
     ed=Extractdata_Config("../config.txt")
     insd=Insertdata_Config("../config.txt")
     print(ed.getFile())
     insd.setUsername("duicul")
     insd.setPassword("daniel")
-    #insd.setIp("31313")
-    #insd.setPort(6767)
-    #insd.setRefresh_In(40)
-    #insd.setRefresh_Out(1)
+    insd.setIp("31313")
+    insd.setPort(6767)
+    insd.setRefresh_In(40)
+    insd.setRefresh_Out(1)
+    insd.setLogTime(3)
     print(ed.testPassword("daniel"))
     print(ed.getUsername())
     print(ed.getPassword())
