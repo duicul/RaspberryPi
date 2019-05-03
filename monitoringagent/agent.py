@@ -8,6 +8,7 @@ from extractvalues import Extractdata_Config,Insertdata_Config
 from outputpin import outputpinon,outputpinoff
 from inputpin import InputPin
 from pinconfig import pin_to_GPIO,GPIO_to_pin
+import RPi.GPIO as GPIO
 loop1=0
 loop2=0
 
