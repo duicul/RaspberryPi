@@ -117,6 +117,7 @@ try:
             print(addr)
             r = requests.post(addr,data)
         init = False
+    GPIO.cleanup()
 except Exception as e:
     print("Main server is down")
     print(traceback.format_exc())

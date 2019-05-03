@@ -4,10 +4,12 @@ import RPi.GPIO as GPIO
 GPIO.setmode(GPIO.BOARD)
 
 def outputpinon(pin):
+    GPIO.cleanup(pin)
     GPIO.setup(pin, GPIO.OUT)
     GPIO.output(pin, True)
 
 def outputpinoff(pin):
+    GPIO.cleanup(pin)
     GPIO.setup(pin, GPIO.OUT)
     GPIO.output(pin, False)
 
