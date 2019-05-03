@@ -119,5 +119,6 @@ try:
         init = False
     GPIO.cleanup()
 except Exception as e:
+    GPIO.cleanup()
     print("Main server is down")
     print(traceback.format_exc())
