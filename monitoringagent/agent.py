@@ -94,6 +94,7 @@ try:
             pins_dict['user']=user
             pins_dict['logtime']=logtime
             pir_list=[]
+            data_dict={}
             print(inpins_list)
             for i in inpins_list:
                 print(i)
@@ -101,16 +102,17 @@ try:
                     val=pininput.readDHT11(int(i[0]))
                     print(val)
                     if val[0] != None and val[1] != None:
-                        pins_dict[i[0]]=str(val[0])+" "+str(val[1])
+                        data_dict[i[0]]=str(val[0])+" "+str(val[1])
                 elif i[1]=="DHT22":
                     val=pininput.readDHT22(int(i[0]))
                     print(val)
                     if val[0] != None and val[1] != None:
-                        pins_dict[i[0]]=str(val[0])+" "+str(val[1])
+                        data_dict[i[0]]=str(val[0])+" "+str(val[1])
                 elif i[1]=="PIR":
                     pir_list.append(i[0])                
                 else:
                     pins_dict[i[0]]=str(random.random()*40)
+            pins_dict['in_pins']=data_dict
             print(pins_dict)
             pininput.set_pir_pins(map(GPIO_to_pin,pir_list))
             data=json.dumps(pins_dict)
