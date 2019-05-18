@@ -80,7 +80,7 @@ def setpass():
 
 @app.route('/getwifidata')
 def getdata_wifi():
-	return getwifidata("../wpa_supplicant.conf")
+	return getwifidata("/etc/wpa_supplicant/wpa_supplicant.conf")
 
 @app.route('/setwifidata',methods = ['POST'])
 def setdata_wifi():
@@ -89,7 +89,7 @@ def setdata_wifi():
                 ssid = request.form['wifi_ssid']
                 psk = request.form['wifi_psk']
                 print(str(ssid)+" "+str(psk))
-                setwifidata("../wpa_supplicant.conf",ssid,psk)
+                setwifidata("/etc/wpa_supplicant/wpa_supplicant.conf",ssid,psk)
                 print("config wifi set")
                 return "okay"
 
