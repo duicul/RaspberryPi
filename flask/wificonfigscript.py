@@ -12,12 +12,9 @@ def setwifidata(filepath,ssid,psk):
     insd=Insertdata_Wifi(filepath)
     insd.writeconf_file()
     print("setwificall")
-    insd=Insertdata_Wifi("../wpa_supplicant.conf")
     print("setting wifi values")
     insd.setSSID(ssid)
     insd.setPsk(psk)
-    
-
 
     
 if __name__ == '__main__':

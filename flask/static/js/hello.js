@@ -59,8 +59,8 @@ $.ajax({url: "/getconfigdata", success: function(result){
  
 function init()
 {$("#login_form").submit(function( event ) { console.log("loginform");event.preventDefault();login();})
-  $("#wifi_form").submit(function( event ) { console.log("configform");event.preventDefault();setwifidata();})
-  $("#config_form").submit(function( event ) { console.log("wifiform");event.preventDefault();setconfigdata();})
+  $("#wifi_form").submit(function( event ) { console.log("wifiform");event.preventDefault();setwifidata();})
+  $("#config_form").submit(function( event ) { console.log("configform");event.preventDefault();setconfigdata();})
   $("#logindata_form").submit(function( event ) { console.log("logindataform");event.preventDefault();setpassworddata();})
 }
  

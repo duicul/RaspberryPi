@@ -38,7 +38,7 @@ class Insertdata_Wifi:
 
     def writeconf_file(self):
         file=open(self.file_name,'w+')
-        f = "country=us \n update_config=1 \n ctrl_interface=/var/run/wpa_supplicant\n\nnetwork={\n scan_ssid=1\n ssid=\"MyNetworkSSID\"\n psk=\"Pa55w0rd1234\"\n}"
+        f = "country=ro \n update_config=1 \n ctrl_interface=/var/run/wpa_supplicant\n\nnetwork={\n scan_ssid=1\n ssid=\"MyNetworkSSID\"\n psk=\"Pa55w0rd1234\"\n}"
         file.write(f)
         file.close()
     
@@ -70,10 +70,10 @@ class Insertdata_Wifi:
 if __name__ == '__main__':
     ed=Extractdata_Wifi("../wpa_supplicant.conf")
     insd=Insertdata_Wifi("../wpa_supplicant.conf")
+    insd.writeconf_file()
     print(ed.getFile())
     insd.setSSID("Tenda_962970")
     insd.setPsk("pufulete")
     print(ed.getSSID())
     print(ed.getPsk())
-    #insd.writeconf_file()
 
