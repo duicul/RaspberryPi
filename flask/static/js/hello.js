@@ -64,10 +64,8 @@ function init()
 function getpassworddata()
  {console.log("getpassworddata");
 $.ajax({url: "/getpassworddata", success: function(result){
-       $("#passconfig").html(result);
-	   $("#logindata_form").submit(function( event ) { console.log("logindataform");event.preventDefault();setpassworddata();})}
-	});
-} 
+$("#passconfig").html(result);}})}
+ 
  
 function setconfigdata()
  {
