@@ -6,7 +6,7 @@ class Extractdata_Wifi:
         self.file_name=file_name
 
     def getFile(self):
-        lock = FileLock(str(self.file_name)+".lock")
+        lock = FileLock("wifiaux.lock")
         with lock:
             file=open(self.file_name,'r')
             data=file.read()
@@ -14,7 +14,7 @@ class Extractdata_Wifi:
         return data
     
     def getSSID(self):
-        lock = FileLock(str(self.file_name)+".lock")
+        lock = FileLock("wifiaux.lock")
         with lock:
             try:
                 file=open(self.file_name,'r')
@@ -27,7 +27,7 @@ class Extractdata_Wifi:
                 return ''
             
     def getPsk(self):
-        lock = FileLock(str(self.file_name)+".lock")
+        lock = FileLock("wifiaux.lock")
         with lock:
             try:
                 file=open(self.file_name,'r')
@@ -47,7 +47,7 @@ class Insertdata_Wifi:
         return self.file_name
 
     def writeconf_file(self):
-        lock = FileLock(str(self.file_name)+".lock")
+        lock = FileLock("wifiaux.lock")
         with lock:
             file=open(self.file_name,'w+')
             f = "country=ro \n update_config=1 \n ctrl_interface=/var/run/wpa_supplicant\n\nnetwork={\n scan_ssid=1\n ssid=\"MyNetworkSSID\"\n psk=\"Pa55w0rd1234\"\n}"
@@ -55,7 +55,7 @@ class Insertdata_Wifi:
             file.close()
     
     def setSSID(self,ssid):
-        lock = FileLock(str(self.file_name)+".lock")
+        lock = FileLock("wifiaux.lock")
         with lock:
             try:
                 file=open(self.file_name,'r')
@@ -70,7 +70,7 @@ class Insertdata_Wifi:
         
         
     def setPsk(self,psk):
-        lock = FileLock(str(self.file_name)+".lock")
+        lock = FileLock("wifiaux.lock")
         with lock:
             try:
                 file=open(self.file_name,'r')
