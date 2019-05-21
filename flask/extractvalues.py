@@ -1,24 +1,31 @@
 import re
 import hashlib
+from filelock import Timeout, FileLock
+
 class Extractdata_Config:
     def __init__(self,file_name):
         self.file_name=file_name
 
     def getFile(self):
-        file=open(self.file_name,'r')
-        data=file.read()
-        file.close()
+        lock = FileLock(str(self.file_name)+".lock")
+        with lock:
+            file=open(self.file_name,'r')
+            data=file.read()
+            file.close()
         return data
     
     def getUsername(self):
-        try:
-            file=open(self.file_name,'r')
-            data=file.read()
-            found = re.search('username=(.*)', data).group(1)
-            return found
-        except AttributeError:
-            return ''
-        file.close()
+        lock = FileLock(str(self.file_name)+".lock")
+        with lock:
+            try:
+                file=open(self.file_name,'r')
+                data=file.read()
+                found = re.search('username=(.*)', data).group(1)
+                file.close()
+                return found
+            except AttributeError:
+                file.close()
+                return ''
         
     def testPassword(self,password):
         m = hashlib.sha256()
@@ -28,64 +35,82 @@ class Extractdata_Config:
         return t==filepass
             
     def getPassword(self):
-        try:
-            file=open(self.file_name,'r')
-            data=file.read()
-            found = re.search('password=(.*)', data).group(1)
-            return found
-        except AttributeError:
-            return ''
-        file.close()
+        lock = FileLock(str(self.file_name)+".lock")
+        with lock:
+            try:
+                file=open(self.file_name,'r')
+                data=file.read()
+                found = re.search('password=(.*)', data).group(1)
+                file.close()
+                return found
+            except AttributeError:
+                file.close()
+                return ''
         
     def getIp(self):
-        try:
-            file=open(self.file_name,'r')
-            data=file.read()
-            found = re.search('ip=(.*)', data).group(1)
-            return found
-        except AttributeError:
-            return ''
-        file.close()
+        lock = FileLock(str(self.file_name)+".lock")
+        with lock:
+            try:
+                file=open(self.file_name,'r')
+                data=file.read()
+                found = re.search('ip=(.*)', data).group(1)
+                file.close()
+                return found
+            except AttributeError:
+                file.close()
+                return ''
         
     def getPort(self):
-        try:
-            file=open(self.file_name,'r')
-            data=file.read()
-            found = re.search('port=(.*)', data).group(1)
-            return found
-        except AttributeError:
-            return ''
-        file.close()
+        lock = FileLock(str(self.file_name)+".lock")
+        with lock:
+            try:
+                file=open(self.file_name,'r')
+                data=file.read()
+                found = re.search('port=(.*)', data).group(1)
+                file.close()
+                return found
+            except AttributeError:
+                file.close()
+                return ''
 
     def getRefresh_In(self):
-        try:
-            file=open(self.file_name,'r')
-            data=file.read()
-            found = re.search('refresh_in=(.*)', data).group(1)
-            return found
-        except AttributeError:
-            return ''
-        file.close()
+        lock = FileLock(str(self.file_name)+".lock")
+        with lock:
+            try:
+                file=open(self.file_name,'r')
+                data=file.read()
+                found = re.search('refresh_in=(.*)', data).group(1)
+                file.close()
+                return found
+            except AttributeError:
+                file.close()
+                return ''
 
     def getRefresh_Out(self):
-        try:
-            file=open(self.file_name,'r')
-            data=file.read()
-            found = re.search('refresh_out=(.*)', data).group(1)
-            return found
-        except AttributeError:
-            return ''
-        file.close()
+        lock = FileLock(str(self.file_name)+".lock")
+        with lock:
+            try:
+                file=open(self.file_name,'r')
+                data=file.read()
+                found = re.search('refresh_out=(.*)', data).group(1)
+                file.close()
+                return found
+            except AttributeError:
+                file.close()
+                return ''
 
     def getLogTime(self):
-        try:
-            file=open(self.file_name,'r')
-            data=file.read()
-            found = re.search('logtime=(.*)', data).group(1)
-            return found
-        except AttributeError:
-            return ''
-        file.close()
+        lock = FileLock(str(self.file_name)+".lock")
+        with lock:
+            try:
+                file=open(self.file_name,'r')
+                data=file.read()
+                found = re.search('logtime=(.*)', data).group(1)
+                file.close()
+                return found
+            except AttributeError:
+                file.close()
+                return ''
         
 class Insertdata_Config:
     def __init__(self,file_name):
@@ -95,104 +120,117 @@ class Insertdata_Config:
         return self.file_name
     
     def setUsername(self,username):
-        try:
-            file=open(self.file_name,'r')
-            data=file.read()
+        lock = FileLock(str(self.file_name)+".lock")
+        with lock:
+            try:
+                file=open(self.file_name,'r')
+                data=file.read()
+                file.close()
+                file=open(self.file_name,'w')
+                found = re.sub('username=.*', 'username=%s' % username,data)
+                file.write(found)
+            except AttributeError as e:
+                print(e)
             file.close()
-            file=open(self.file_name,'w')
-            found = re.sub('username=.*', 'username=%s' % username,data)
-            file.write(found)
-        except AttributeError as e:
-            print(e)
-        file.close()
-        
         
     def setPassword(self,password):
         m = hashlib.sha256()
         m.update(password.encode())
         t=m.hexdigest()
-        try:
-            file=open(self.file_name,'r')
-            data=file.read()
+        lock = FileLock(str(self.file_name)+".lock")
+        with lock:
+            try:
+                file=open(self.file_name,'r')
+                data=file.read()
+                file.close()
+                file=open(self.file_name,'w')
+                found = re.sub('password=.*', 'password=%s' % t,data)
+                file.write(found)
+            except AttributeError:
+                pass
             file.close()
-            file=open(self.file_name,'w')
-            found = re.sub('password=.*', 'password=%s' % t,data)
-            file.write(found)
-        except AttributeError:
-            pass
-        file.close()
         
     def setIp(self,ip):
-        try:
-            file=open(self.file_name,'r')
-            data=file.read()
+        lock = FileLock(str(self.file_name)+".lock")
+        with lock:
+            try:
+                file=open(self.file_name,'r')
+                data=file.read()
+                file.close()
+                file=open(self.file_name,'w')
+                found = re.sub('ip=.*', 'ip=%s' % ip,data)
+                file.write(found)
+            except AttributeError:
+                pass
             file.close()
-            file=open(self.file_name,'w')
-            found = re.sub('ip=.*', 'ip=%s' % ip,data)
-            file.write(found)
-        except AttributeError:
-            pass
-        file.close()
         
     def setPort(self,port):
-        try:
-            file=open(self.file_name,'r')
-            data=file.read()
+        lock = FileLock(str(self.file_name)+".lock")
+        with lock:
+            try:
+                file=open(self.file_name,'r')
+                data=file.read()
+                file.close()
+                file=open(self.file_name,'w')
+                found = re.sub('port=.*', 'port=%s' % port,data)
+                file.write(found)
+            except AttributeError:
+                pass
             file.close()
-            file=open(self.file_name,'w')
-            found = re.sub('port=.*', 'port=%s' % port,data)
-            file.write(found)
-        except AttributeError:
-            pass
-        file.close()
 
     def setRefresh_In(self,refresh):
-        try:
-            file=open(self.file_name,'r')
-            data=file.read()
+        lock = FileLock(str(self.file_name)+".lock")
+        with lock:
+            try:
+                file=open(self.file_name,'r')
+                data=file.read()
+                file.close()
+                file=open(self.file_name,'w')
+                found = re.sub('refresh_in=.*', 'refresh_in=%s' % refresh,data)
+                file.write(found)
+            except AttributeError:
+                pass
             file.close()
-            file=open(self.file_name,'w')
-            found = re.sub('refresh_in=.*', 'refresh_in=%s' % refresh,data)
-            file.write(found)
-        except AttributeError:
-            pass
-        file.close()
 
     def setRefresh_Out(self,refresh):
-        try:
-            file=open(self.file_name,'r')
-            data=file.read()
+        lock = FileLock(str(self.file_name)+".lock")
+        with lock:
+            try:
+                file=open(self.file_name,'r')
+                data=file.read()
+                file.close()
+                file=open(self.file_name,'w')
+                found = re.sub('refresh_out=.*', 'refresh_out=%s' % refresh,data)
+                file.write(found)
+            except AttributeError:
+                pass
             file.close()
-            file=open(self.file_name,'w')
-            found = re.sub('refresh_out=.*', 'refresh_out=%s' % refresh,data)
-            file.write(found)
-        except AttributeError:
-            pass
-        file.close()
 
     def setLogTime(self,logtime):
-        try:
-            file=open(self.file_name,'r')
-            data=file.read()
+        lock = FileLock(str(self.file_name)+".lock")
+        with lock:
+            try:
+                file=open(self.file_name,'r')
+                data=file.read()
+                file.close()
+                file=open(self.file_name,'w')
+                found = re.sub('logtime=.*', 'logtime=%s' % logtime,data)
+                file.write(found)
+            except AttributeError:
+                pass
             file.close()
-            file=open(self.file_name,'w')
-            found = re.sub('logtime=.*', 'logtime=%s' % logtime,data)
-            file.write(found)
-        except AttributeError:
-            pass
-        file.close()
 
 if __name__ == '__main__':
     ed=Extractdata_Config("../config.txt")
     insd=Insertdata_Config("../config.txt")
     print(ed.getFile())
-    insd.setUsername("duicul")
-    insd.setPassword("daniel")
-    insd.setIp("31313")
+    #insd.setUsername("duicul")
+    #insd.setPassword("daniel")
+    #insd.setIp("31313")
     insd.setPort(6767)
-    insd.setRefresh_In(40)
+    insd.setRefresh_In(30)
     insd.setRefresh_Out(1)
-    insd.setLogTime(3)
+    insd.setLogTime(20)
     print(ed.testPassword("daniel"))
     print(ed.getUsername())
     print(ed.getPassword())
