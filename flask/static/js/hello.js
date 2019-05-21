@@ -16,10 +16,10 @@ function goodbye(){
  {//interval_calls=setInterval(ajax_calls,period);
   }
 
-  $("#login_form").submit(function( event ) { console.log("loginform");event.preventDefault();login();})
+  /*$("#login_form").submit(function( event ) { console.log("loginform");event.preventDefault();login();})
   $("#wifi_form").submit(function( event ) { console.log("configform");event.preventDefault();setwifidata();})
   $("#config_form").submit(function( event ) { console.log("wifiform");event.preventDefault();setconfigdata();})
-  $("#logindata_form").submit(function( event ) { console.log("logindataform");event.preventDefault();setpassworddata();})
+  $("#logindata_form").submit(function( event ) { console.log("logindataform");event.preventDefault();setpassworddata();})*/
   
 function login()
 {console.log("logging in ...");
@@ -58,13 +58,18 @@ function init()
 {$("#login_form").submit(function( event ) { console.log("loginform");event.preventDefault();login();})
   $("#wifi_form").submit(function( event ) { console.log("wifiform");event.preventDefault();setwifidata();})
   $("#config_form").submit(function( event ) { console.log("configform");event.preventDefault();setconfigdata();})
-  $("#logindata_form").submit(function( event ) { console.log("logindataform");event.preventDefault();setpassworddata();
+  $("#logindata_form").submit(function( event ) { console.log("logindataform");event.preventDefault();setpassworddata();})
 }
  
 function getpassworddata()
  {console.log("getpassworddata");
 $.ajax({url: "/getpassworddata", success: function(result){
-$("#passconfig").html(result);}})}
+$("#passconfig").html(result);}
+}
+
+)
+
+}
  
  
 function setconfigdata()
@@ -109,8 +114,7 @@ function setpassworddata()
 function getwifidata()
  {console.log("getwifidata");
 $.ajax({url: "/getwifidata", success: function(result){
-       $("#wifi").html(result);})}
-	});
+       $("#wifi").html(result);}})
 }
  
 function setwifidata()
