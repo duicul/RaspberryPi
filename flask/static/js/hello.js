@@ -51,9 +51,7 @@ function stopajaxcalls()
 function getconfigdata()
  {console.log("getconfigdata");
 $.ajax({url: "/getconfigdata", success: function(result){
-       $("#config").html(result);})
-	   }
-	});
+$("#config").html(result);}})
 }
  
 function init()
