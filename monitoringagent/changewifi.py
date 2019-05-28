@@ -50,7 +50,8 @@ class Insertdata_Wifi:
         lock = FileLock(str(self.file_name)+".lock")
         with lock:
             file=open(self.file_name,'w+')
-            f = "country=ro \n update_config=1 \n ctrl_interface=/var/run/wpa_supplicant\n\nnetwork={\n scan_ssid=1\n ssid=\"MyNetworkSSID\"\n psk=\"Pa55w0rd1234\"\n}"
+            f = "country=ro \n update_config=1 \n ctrl_interface=/var/run/wpa_supplicant\n \
+                \nnetwork={\n scan_ssid=1\n ssid=\"MyNetworkSSID\"\n psk=\"Pa55w0rd1234\"\n}"
             file.write(f)
             file.close()
     

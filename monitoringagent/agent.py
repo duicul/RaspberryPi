@@ -22,7 +22,6 @@ try:
         print("Loop "+str(loop1)+" "+str(loop2))
         loop1=loop1+1
         loop2=loop2+1
-        time.sleep(1)
         ed=Extractdata_Config("../config.txt")
         insd=Insertdata_Config("../config.txt")
         user=ed.getUsername()
@@ -31,13 +30,13 @@ try:
         refresh_in=int(ed.getRefresh_In())
         refresh_out=int(ed.getRefresh_Out())
         logtime=int(ed.getLogTime())
+        time.sleep(1)
         if loop1>=refresh_out or init:
             loop1=0
             pins_dict={}
             pins_dict['data']="outputpins"
             pins_dict['user']=user
             addr='http://'+str(ip)+":"+str(port)+"/outputpinsstatus"
-            print(addr)
             r = requests.post(addr,json.dumps(pins_dict))
             print(r.text)
             y=json.loads(r.text)
@@ -68,7 +67,6 @@ try:
             pins_dict['data']="pins"
             pins_dict['user']=user
             addr='http://'+str(ip)+":"+str(port)+"/pinsstatus"
-           # print(addr)
             r = requests.post(addr,json.dumps(pins_dict))
            # print(r.text)
             y=json.loads(r.text)
@@ -77,6 +75,7 @@ try:
             #print(y)
             print(in_pins)
             print(out_pins)
+            in_pins=json.loads(y['IN'])
             inpins_list=[]
             for in_pin in in_pins :
                 inpins_list.append([str(in_pin),str(in_pins[in_pin])])
@@ -99,27 +98,25 @@ try:
             print(inpins_list)
             for i in inpins_list:
                 print(i)
-                if i[1]=="DHT11":
-                    val=pininput.readDHT11(int(i[0]))
+                if i[1]=="DHT11": #daca senzorul este DHT11
+                    val=pininput.readDHT11(int(i[0])) #citire valoare senzor
+                    if val[0] != None and val[1] != None: #daca valoarea a fost citită
+                        data_dict[i[0]]=str(val[0])+" "+str(val[1])#este creat un dicționar 
+								   #cu valorile senzorilor
+                elif i[1]=="DHT22": #daca senzorul este DHT11
+                    val=pininput.readDHT22(int(i[0])) #citire valoare senzor
                     print(val)
-                    if val[0] != None and val[1] != None:
-                        data_dict[i[0]]=str(val[0])+" "+str(val[1])
-                elif i[1]=="DHT22":
-                    val=pininput.readDHT22(int(i[0]))
-                    print(val)
-                    if val[0] != None and val[1] != None:
-                        data_dict[i[0]]=str(val[0])+" "+str(val[1])
-                elif i[1]=="PIR":
-                    pir_list.append(i[0])                
-                else:
-                    pins_dict[i[0]]=str(random.random()*40)
-            pins_dict['in_pins']=data_dict
-            print(pins_dict)
-            pininput.set_pir_pins(map(GPIO_to_pin,pir_list))
-            data=json.dumps(pins_dict)
-            addr='http://'+str(ip)+":"+str(port)+"/inputpinsstatus"
-            print(addr)
-            r = requests.post(addr,data)
+                    if val[0] != None and val[1] != None: #daca valoarea a fost citită
+                        data_dict[i[0]]=str(val[0])+" "+str(val[1])#este creat un dicționar 
+                                                                    #cu valorile senzorilor
+                elif i[1]=="PIR": #dacă senzorul este PIR
+                    pir_list.append(i[0])  #stocare valoare pin pentru cereri asincrone               
+            pins_dict['in_pins']=data_dict #este adăugat în JSON dicționarul cu valorile pinilor de intrare
+            #print(pins_dict)
+            pininput.set_pir_pins(map(GPIO_to_pin,pir_list)) #stocare pini senzori PIR
+            data=json.dumps(pins_dict) #creare JSON pe baza dicționarului de pini
+            addr='http://'+str(ip)+":"+str(port)+"/inputpinsstatus" #adresă server din config.txt
+            r = requests.post(addr,data) #trimitere cerere
         init = False
     GPIO.cleanup()
 except Exception as e:
