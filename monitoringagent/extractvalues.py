@@ -13,7 +13,7 @@ class Extractdata_Config:
             #folosind obiectul de tip FileLock este deschis
             #fisierul config.txt , fiind creat un fisier temporar
             #config.txt.lock pe care va fi cerut lock-ul
-            #si în celelalte cazuri
+            #si in celelalte cazuri
             data=file.read()
             file.close()
         return data

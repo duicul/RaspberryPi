@@ -71,10 +71,10 @@ try:
            # print(r.text)
             y=json.loads(r.text)
             in_pins=json.loads(y['IN'])
-            out_pins=json.loads(y['OUT'])
+            #out_pins=json.loads(y['OUT']) no outpins sent
             #print(y)
             print(in_pins)
-            print(out_pins)
+            #print(out_pins) no outpins sent
             in_pins=json.loads(y['IN'])
             inpins_list=[]
             for in_pin in in_pins :

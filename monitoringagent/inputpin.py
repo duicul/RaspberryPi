@@ -22,7 +22,7 @@ class InputPin:
         pir_dict['pin_no']=pin_to_GPIO(channel)
         data=json.dumps(pir_dict)
         #creare JSON specific acestei cereri de forma
-        #{‘data’:’pirpin’,’user’:’duicul’,’pin_no’:12}
+        #{'data':'pirpin','user':'duicul','pin_no':12}
         r = requests.post(addr,data)
         #trimitere cerere catre server folosind URL-ul /pirpins pentru evenimente asincrone
         print("send pir data "+str(channel)+" "+str(data))
@@ -32,12 +32,12 @@ class InputPin:
         pins_to_remove=list(set(self.pir_list)-set(pir_pin_list))
         #lista cu pini pentru care trebuie eliminata intreruperea / senzorul nu mai este activ
         pins_to_add=list(set(pir_pin_list)-set(self.pir_list))
-        #lista cu pini pentru care trebuie adaugata întreruperea
+        #lista cu pini pentru care trebuie adaugata intreruperea
         print("current pin list "+str(self.pir_list))
         print("pirpins to add "+str(pins_to_add))
         print("pirpins to remove"+str(pins_to_remove))
         self.pir_list=self.pir_list+pins_to_add
-        #adăugare pini noi în lista curentă
+        #adaugare pini noi in lista curenta
         for i in pins_to_remove:
             self.pir_list.remove(i)
             GPIO.remove_event_detect(int(i))
@@ -46,7 +46,7 @@ class InputPin:
         for i in pins_to_add:
             GPIO.setup(int(i), GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
             GPIO.add_event_detect(int(i), GPIO.RISING, callback=self.sendpirdata, bouncetime=3000)
-            #adaugare intrerupere pentru noii pini cu o perioada de detectie între evenimente de 3 secunde
+            #adaugare intrerupere pentru noii pini cu o perioada de detectie intre evenimente de 3 secunde
             #cu functia de callback sendpirdata
 
     def readDHT11(self,pin):
