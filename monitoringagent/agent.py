@@ -111,7 +111,7 @@ try:
                                                                     #cu valorile senzorilor
                 elif i[1]=="PIR": #daca senzorul este PIR
                     pir_list.append(i[0])  #stocare valoare pin pentru cereri asincrone               
-            pins_dict['in_pins']=data_dict #este adaugat în JSON dictionarul cu valorile pinilor de intrare
+            pins_dict['in_pins']=data_dict #este adaugat in JSON dictionarul cu valorile pinilor de intrare
             #print(pins_dict)
             pininput.set_pir_pins(map(GPIO_to_pin,pir_list)) #stocare pini senzori PIR
             data=json.dumps(pins_dict) #creare JSON pe baza dictionarului de pini
