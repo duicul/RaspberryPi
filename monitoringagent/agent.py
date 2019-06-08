@@ -100,22 +100,22 @@ try:
                 print(i)
                 if i[1]=="DHT11": #daca senzorul este DHT11
                     val=pininput.readDHT11(int(i[0])) #citire valoare senzor
-                    if val[0] != None and val[1] != None: #daca valoarea a fost citită
-                        data_dict[i[0]]=str(val[0])+" "+str(val[1])#este creat un dicționar 
+                    if val[0] != None and val[1] != None: #daca valoarea a fost citita
+                        data_dict[i[0]]=str(val[0])+" "+str(val[1])#este creat un dictionar 
 								   #cu valorile senzorilor
                 elif i[1]=="DHT22": #daca senzorul este DHT11
                     val=pininput.readDHT22(int(i[0])) #citire valoare senzor
                     print(val)
-                    if val[0] != None and val[1] != None: #daca valoarea a fost citită
-                        data_dict[i[0]]=str(val[0])+" "+str(val[1])#este creat un dicționar 
+                    if val[0] != None and val[1] != None: #daca valoarea a fost citita
+                        data_dict[i[0]]=str(val[0])+" "+str(val[1])#este creat un dictionar 
                                                                     #cu valorile senzorilor
-                elif i[1]=="PIR": #dacă senzorul este PIR
+                elif i[1]=="PIR": #daca senzorul este PIR
                     pir_list.append(i[0])  #stocare valoare pin pentru cereri asincrone               
-            pins_dict['in_pins']=data_dict #este adăugat în JSON dicționarul cu valorile pinilor de intrare
+            pins_dict['in_pins']=data_dict #este adaugat în JSON dictionarul cu valorile pinilor de intrare
             #print(pins_dict)
             pininput.set_pir_pins(map(GPIO_to_pin,pir_list)) #stocare pini senzori PIR
-            data=json.dumps(pins_dict) #creare JSON pe baza dicționarului de pini
-            addr='http://'+str(ip)+":"+str(port)+"/inputpinsstatus" #adresă server din config.txt
+            data=json.dumps(pins_dict) #creare JSON pe baza dictionarului de pini
+            addr='http://'+str(ip)+":"+str(port)+"/inputpinsstatus" #adresa server din config.txt
             r = requests.post(addr,data) #trimitere cerere
         init = False
     GPIO.cleanup()

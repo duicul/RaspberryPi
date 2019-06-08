@@ -11,9 +11,9 @@ class Extractdata_Config:
         with lock:
             file=open(self.file_name,'r')
             #folosind obiectul de tip FileLock este deschis
-            #fișierul config.txt , fiind creat un fișier temporar
+            #fisierul config.txt , fiind creat un fisier temporar
             #config.txt.lock pe care va fi cerut lock-ul
-            #și în celelalte cazuri
+            #si în celelalte cazuri
             data=file.read()
             file.close()
         return data
